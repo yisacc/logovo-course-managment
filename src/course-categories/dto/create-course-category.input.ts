@@ -1,17 +1,15 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsNotEmpty } from 'class-validator';
+import { IsMongoId, IsNotEmpty } from 'class-validator';
+import { Schema as MongooseSchema } from 'mongoose';
 
 @InputType()
-export class CreateCourseInput{
+export class CreateCourseCategoryInput{
   @IsNotEmpty()
   @Field()
   name:string
 
   @IsNotEmpty()
-  @Field()
-  videoLink:string
-
-  @IsNotEmpty()
-  @Field()
-  description:string
+  @IsMongoId()
+  @Field(()=>String)
+  course: MongooseSchema.Types.ObjectId;
 }

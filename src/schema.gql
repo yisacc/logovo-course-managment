@@ -1,0 +1,32 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CourseEntity {
+  _id: String!
+  name: String!
+  videoLink: String!
+  description: String!
+}
+
+type CourseCategoryEntity {
+  _id: String!
+  name: String!
+  course: CourseEntity!
+}
+
+type Query {
+  courses: [CourseEntity!]!
+  course(id: String!): CourseEntity!
+  courseCategories: [CourseCategoryEntity!]!
+  courseCategory(id: String!): CourseCategoryEntity!
+}
+
+type Mutation {
+  createCourse(createCourseInput: CreateCourseCategoryInput!): CourseCategoryEntity!
+}
+
+input CreateCourseCategoryInput {
+  name: String!
+  course: String!
+}
