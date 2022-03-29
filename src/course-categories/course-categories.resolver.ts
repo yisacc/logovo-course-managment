@@ -8,8 +8,8 @@ export class CourseCategoriesResolver {
   constructor(private readonly courseCategoriesService: CourseCategoriesService) {}
 
   @Mutation(() => CourseCategoryEntity)
-  async createCourse(
-    @Args('createCourseInput') createCourseCategoryInput: CreateCourseCategoryInput
+  async createCourseCategory(
+    @Args('createCourseCategoryInput') createCourseCategoryInput: CreateCourseCategoryInput
   ):Promise<CourseCategoryEntity> {
     return await this.courseCategoriesService.create(createCourseCategoryInput);
   }

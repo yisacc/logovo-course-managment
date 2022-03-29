@@ -15,18 +15,42 @@ type CourseCategoryEntity {
   course: CourseEntity!
 }
 
+type LessonsEntity {
+  _id: String!
+  name: String!
+  videoLink: String!
+  description: String!
+  courseCategory: CourseCategoryEntity!
+}
+
 type Query {
   courses: [CourseEntity!]!
   course(id: String!): CourseEntity!
   courseCategories: [CourseCategoryEntity!]!
-  courseCategory(id: String!): CourseCategoryEntity!
+  courseCategory(id: String!): LessonsEntity!
+  lessons: [LessonsEntity!]!
 }
 
 type Mutation {
-  createCourse(createCourseInput: CreateCourseCategoryInput!): CourseCategoryEntity!
+  createCourse(createCourseInput: CreateCourseInput!): CourseEntity!
+  createCourseCategory(createCourseCategoryInput: CreateCourseCategoryInput!): CourseCategoryEntity!
+  createLesson(createLessonInput: CreateLessonInput!): LessonsEntity!
+}
+
+input CreateCourseInput {
+  name: String!
+  videoLink: String!
+  description: String!
 }
 
 input CreateCourseCategoryInput {
   name: String!
   course: String!
+}
+
+input CreateLessonInput {
+  name: String!
+  videoLink: String!
+  description: String!
+  courseCategory: String!
 }

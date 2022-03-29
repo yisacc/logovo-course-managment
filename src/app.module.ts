@@ -5,6 +5,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { CoursesModule } from './courses/courses.module';
 import { CourseCategoriesModule } from './course-categories/course-categories.module';
+import { LessonsModule } from './lessons/lessons.module';
 
 
 @Module({
@@ -16,6 +17,7 @@ import { CourseCategoriesModule } from './course-categories/course-categories.mo
     CoreModule,
     CoursesModule,
     CourseCategoriesModule,
+    LessonsModule,
   ],
   controllers: [],
   providers: [],
