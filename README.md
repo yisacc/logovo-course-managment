@@ -1,16 +1,23 @@
+# Logovo Course Managment
 
+## Run it locally
 
-## Installation
+clone the project from and install the packages
 
-```bash
-$ npm install
-```
+git clone https://github.com/yisacc/logovo-course-managment-api
 
-## Running the app
+## Install Package
 
-```bash
-# development
-$ npm run start
+npm install
+
+## Available Scripts
+
+In the project directory, you can run:
+
+## Running the backend
+
+Run `npm run start` Navigate to http://localhost:3000/graphql. The app will automatically reload if you change any of the source files.
+
 
 ## Further help
 
