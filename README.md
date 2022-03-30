@@ -16,7 +16,7 @@ In the project directory, you can run:
 
 ## Running the backend
 
-Run `npm run start` Navigate to http://localhost:3000/graphql. The app will automatically reload if you change any of the source files.
+Run `npm run start` Navigate to http://localhost:3000/graphql.
 
 
 ## Further help
