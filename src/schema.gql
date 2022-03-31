@@ -28,6 +28,7 @@ type Query {
   course(id: String!): CourseEntity!
   courseCategories: [CourseCategoryEntity!]!
   courseCategory(id: String!): LessonsEntity!
+  categoriesByCourseId(courseId: String!): [CourseCategoryEntity!]!
   lessons: [LessonsEntity!]!
 }
 

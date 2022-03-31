@@ -26,5 +26,7 @@ export class CourseCategoriesService {
   async findOne(id:String) {
     return this.courseCategoryModel.findById(id);
   }
-
+  async findByCourseId(id:String):Promise<CourseCategoryDocument[]> {
+    return this.courseCategoryModel.find({course:id})
+  }
 }

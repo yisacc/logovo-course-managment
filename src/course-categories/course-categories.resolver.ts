@@ -24,4 +24,9 @@ export class CourseCategoriesResolver {
     return await this.courseCategoriesService.findOne(id);
   }
 
+  @Query(() => [CourseCategoryEntity], { name: 'categoriesByCourseId' })
+  async findByCourseId(@Args('courseId', { type: () => String }) id: string):Promise<CourseCategoryEntity[]> {
+    return await this.courseCategoriesService.findByCourseId(id);
+  }
+
 }
