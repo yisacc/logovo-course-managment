@@ -16,7 +16,7 @@ export class CourseCategoriesResolver {
 
   @Query(() => [CourseCategoryEntity], { name: 'courseCategories' })
   async findAll():Promise<CourseCategoryEntity[]> {
-    return await this.courseCategoriesService.findAll();
+    return (await this.courseCategoriesService.findAll());
   }
 
   @Query(() => CourseCategoryEntity, { name: 'courseCategory' })

@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document} from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { CourseCategoryEntity } from '../course-categories/course-categories.schema';
 
 
 @Schema({ timestamps: true, versionKey: false })
@@ -30,6 +31,15 @@ export class CourseEntity{
   })
   @Field()
   description: string;
+
+  @Prop({
+    required: true,
+    type: [MongooseSchema.Types.ObjectId],
+    default:[],
+    ref: CourseCategoryEntity.name,
+  })
+  @Field(()=>[CourseCategoryEntity] )
+  courseCategories: MongooseSchema.Types.ObjectId[];
 }
 
 export const CourseDatabaseName = 'courses';

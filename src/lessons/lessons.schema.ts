@@ -7,7 +7,7 @@ import { CourseCategoryEntity } from '../course-categories/course-categories.sch
 
 @Schema({ timestamps: true, versionKey: false })
 @ObjectType()
-export class LessonsEntity{
+export class LessonEntity{
   @Field()
   _id: string;
 
@@ -32,17 +32,9 @@ export class LessonsEntity{
   })
   @Field()
   description: string;
-
-  @Prop({
-    required: true,
-    type: Types.ObjectId,
-    ref: CourseCategoryEntity.name,
-  })
-  @Field(type=>CourseCategoryEntity)
-  courseCategory: Types.ObjectId;
 }
 
 export const LessonDatabaseName = 'lessons';
-export const LessonSchema = SchemaFactory.createForClass(LessonsEntity);
+export const LessonSchema = SchemaFactory.createForClass(LessonEntity);
 
-export type LessonDocument = LessonsEntity & Document;
+export type LessonDocument = LessonEntity & Document;

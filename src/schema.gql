@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type CourseEntity {
+type LessonEntity {
   _id: String!
   name: String!
   videoLink: String!
@@ -12,30 +12,30 @@ type CourseEntity {
 type CourseCategoryEntity {
   _id: String!
   name: String!
-  course: CourseEntity!
+  lessons: [LessonEntity!]!
 }
 
-type LessonsEntity {
+type CourseEntity {
   _id: String!
   name: String!
   videoLink: String!
   description: String!
-  courseCategory: CourseCategoryEntity!
+  courseCategories: [CourseCategoryEntity!]!
 }
 
 type Query {
   courses: [CourseEntity!]!
   course(id: String!): CourseEntity!
   courseCategories: [CourseCategoryEntity!]!
-  courseCategory(id: String!): LessonsEntity!
+  courseCategory(id: String!): LessonEntity!
   categoriesByCourseId(courseId: String!): [CourseCategoryEntity!]!
-  lessons: [LessonsEntity!]!
+  lessons: [LessonEntity!]!
 }
 
 type Mutation {
   createCourse(createCourseInput: CreateCourseInput!): CourseEntity!
   createCourseCategory(createCourseCategoryInput: CreateCourseCategoryInput!): CourseCategoryEntity!
-  createLesson(createLessonInput: CreateLessonInput!): LessonsEntity!
+  createLesson(createLessonInput: CreateLessonInput!): LessonEntity!
 }
 
 input CreateCourseInput {

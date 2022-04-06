@@ -3,12 +3,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CourseCategoryDocument, CourseCategoryEntity } from './course-categories.schema';
 import { CreateCourseCategoryInput } from './dto/create-course-category.input';
+import { CourseDocument, CourseEntity } from '../courses/courses.schema';
 
 @Injectable()
 export class CourseCategoriesService {
   constructor(
     @InjectModel(CourseCategoryEntity.name)
-    private readonly courseCategoryModel: Model<CourseCategoryDocument>
+    private readonly courseCategoryModel: Model<CourseCategoryDocument>,
+    @InjectModel(CourseEntity.name)
+    private readonly courseModel: Model<CourseDocument>
   ){}
 
   async create(createCourseCategoryInput: CreateCourseCategoryInput):Promise<CourseCategoryEntity> {
@@ -16,7 +19,12 @@ export class CourseCategoriesService {
       name:createCourseCategoryInput.name,
       course:createCourseCategoryInput.course,
     });
-    return await create.save()
+    return await create.save().then(docCategory=>
+      this.courseModel.findByIdAndUpdate(createCourseCategoryInput.course,
+    { $push: { courseCategories: docCategory._id } },
+    { new: true, useFindAndModify: false }
+    )
+    )
   }
 
   async findAll() {

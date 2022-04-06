@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CourseDocument, CourseEntity } from './courses.schema';
 import { CreateCourseInput } from './dto/create-course.input';
+import { CourseCategoryEntity } from '../course-categories/course-categories.schema';
+import { LessonEntity } from '../lessons/lessons.schema';
 
 @Injectable()
 export class CoursesService {
@@ -21,7 +23,13 @@ export class CoursesService {
   }
 
   async findAll() {
-    return this.courseModel.find();
+    return this.courseModel.find().populate({
+      path:'courseCategories',
+      populate:{
+        path:"lessons",
+        model:LessonEntity.name
+      }
+    });
   }
 
   async findOne(id:String) {
