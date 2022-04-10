@@ -36,6 +36,7 @@ type Query {
 type Mutation {
   createCourse(createCourseInput: CreateCourseInput!): CourseEntity!
   createCourseCategory(createCourseCategoryInput: CreateCourseCategoryInput!): CourseCategoryEntity!
+  updateOrder(updateCourseCategoryOrder: UpdateCourseCategoryOrder!): [CourseCategoryEntity!]!
   createLesson(createLessonInput: CreateLessonInput!): LessonEntity!
 }
 
@@ -48,6 +49,10 @@ input CreateCourseInput {
 input CreateCourseCategoryInput {
   name: String!
   course: String!
+}
+
+input UpdateCourseCategoryOrder {
+  newOrder: String!
 }
 
 input CreateLessonInput {

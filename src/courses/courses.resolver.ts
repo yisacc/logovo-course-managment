@@ -1,5 +1,5 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { CourseEntity } from './courses.schema';
+import { CourseDocument, CourseEntity } from './courses.schema';
 import { CoursesService } from './courses.service';
 import { CreateCourseInput } from './dto/create-course.input';
 
@@ -15,7 +15,7 @@ export class CoursesResolver {
   }
 
   @Query(() => [CourseEntity], { name: 'courses' })
-  async findAll():Promise<CourseEntity[]> {
+  async findAll():Promise<CourseDocument[]> {
     return await this.coursesService.findAll();
   }
 

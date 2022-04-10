@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { CourseCategoryEntity } from './course-categories.schema';
 import { CourseCategoriesService } from './course-categories.service';
 import { CreateCourseCategoryInput } from './dto/create-course-category.input';
+import { UpdateCourseCategoryOrder } from './dto/update-course-category-order';
 
 @Resolver(() => CourseCategoryEntity)
 export class CourseCategoriesResolver {
@@ -28,5 +29,10 @@ export class CourseCategoriesResolver {
   async findByCourseId(@Args('courseId', { type: () => String }) id: string):Promise<CourseCategoryEntity[]> {
     return await this.courseCategoriesService.findByCourseId(id);
   }
-
+  @Mutation(() => [CourseCategoryEntity])
+  async updateOrder(
+    @Args('updateCourseCategoryOrder') updateCourseCategoryOrder: UpdateCourseCategoryOrder
+  ):Promise<CourseCategoryEntity[]> {
+    return await this.courseCategoriesService.updateOrder(updateCourseCategoryOrder);
+  }
 }

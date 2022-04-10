@@ -25,10 +25,11 @@ export class CoursesService {
   async findAll() {
     return this.courseModel.find().populate({
       path:'courseCategories',
+      options: { sort: 'orderKey' },
       populate:{
         path:"lessons",
         model:LessonEntity.name
-      }
+      },
     });
   }
 
