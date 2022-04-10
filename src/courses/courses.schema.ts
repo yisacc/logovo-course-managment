@@ -34,7 +34,7 @@ export class CourseEntity{
 
   @Prop({
     required: true,
-    type: [MongooseSchema.Types.ObjectId],
+    type: Array,
     default:[],
     ref: CourseCategoryEntity.name,
   })

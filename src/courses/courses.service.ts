@@ -33,7 +33,10 @@ export class CoursesService {
   }
 
   async findOne(id:String) {
-    return this.courseModel.findById(id);
+    return this.courseModel.findById(id).populate({
+      path:'courseCategories',
+      model:CourseCategoryEntity.name
+    });
   }
 
 }

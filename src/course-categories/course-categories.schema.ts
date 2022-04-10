@@ -20,6 +20,15 @@ export class CourseCategoryEntity{
 
   @Prop({
     required: true,
+    index: true,
+    default:65535,
+
+  })
+  @Field()
+  orderKey: number;
+
+  @Prop({
+    required: true,
     type: [MongooseSchema.Types.ObjectId],
     default:[],
     ref: LessonEntity.name,

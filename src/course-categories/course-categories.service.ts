@@ -15,9 +15,11 @@ export class CourseCategoriesService {
   ){}
 
   async create(createCourseCategoryInput: CreateCourseCategoryInput):Promise<CourseCategoryEntity> {
+    const course=await this.courseModel.findById(createCourseCategoryInput.course)
     const create:CourseCategoryDocument=new this.courseCategoryModel({
       name:createCourseCategoryInput.name,
       course:createCourseCategoryInput.course,
+      orderKey:course.courseCategories.length,
     });
     return await create.save().then(docCategory=>
       this.courseModel.findByIdAndUpdate(createCourseCategoryInput.course,

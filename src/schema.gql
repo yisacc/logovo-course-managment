@@ -12,6 +12,7 @@ type LessonEntity {
 type CourseCategoryEntity {
   _id: String!
   name: String!
+  orderKey: Float!
   lessons: [LessonEntity!]!
 }
 
