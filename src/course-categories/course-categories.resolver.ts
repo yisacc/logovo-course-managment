@@ -29,10 +29,10 @@ export class CourseCategoriesResolver {
   async findByCourseId(@Args('courseId', { type: () => String }) id: string):Promise<CourseCategoryEntity[]> {
     return await this.courseCategoriesService.findByCourseId(id);
   }
-  @Mutation(() => [CourseCategoryEntity])
+  @Mutation(() => Boolean)
   async updateOrder(
     @Args('updateCourseCategoryOrder') updateCourseCategoryOrder: UpdateCourseCategoryOrder
-  ):Promise<CourseCategoryEntity[]> {
+  ):Promise<boolean> {
     return await this.courseCategoriesService.updateOrder(updateCourseCategoryOrder);
   }
 }

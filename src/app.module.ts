@@ -6,6 +6,9 @@ import { join } from 'path';
 import { CoursesModule } from './courses/courses.module';
 import { CourseCategoriesModule } from './course-categories/course-categories.module';
 import { LessonsModule } from './lessons/lessons.module';
+import { UserModule } from './user/user.module';
+import { RoleModule } from './role/role.module';
+import { PermissionModule } from './permission/permission.module';
 
 
 @Module({
@@ -18,6 +21,9 @@ import { LessonsModule } from './lessons/lessons.module';
     CoursesModule,
     CourseCategoriesModule,
     LessonsModule,
+    UserModule,
+    RoleModule,
+    PermissionModule,
   ],
   controllers: [],
   providers: [],

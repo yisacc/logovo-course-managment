@@ -41,15 +41,21 @@ export class CourseCategoriesService {
     return this.courseCategoryModel.find({course:id})
   }
 
-  async updateOrder(updateCourseCategoryOrder: UpdateCourseCategoryOrder):Promise<CourseCategoryEntity[]> {
-    const newOrder=updateCourseCategoryOrder.newOrder.split(',')
-    for(let i=0;i<newOrder.length;i++){
-      let data=newOrder[i]
-      const update : CourseCategoryDocument =await this.courseCategoryModel.findById(data);
-      update.orderKey=i;
-     await update.save();
+  async updateOrder(updateCourseCategoryOrder: UpdateCourseCategoryOrder):Promise<boolean> {
+    try {
+      const newOrder=updateCourseCategoryOrder.newOrder.split(',')
+      for(let i=0;i<newOrder.length;i++){
+        let data=newOrder[i]
+        const update : CourseCategoryDocument =await this.courseCategoryModel.findById(data);
+        update.orderKey=i;
+        await update.save();
+      }
+      return true;
     }
-return this.courseCategoryModel.find();
+    catch (e) {
+      return false;
+    }
+
 
   }
 }

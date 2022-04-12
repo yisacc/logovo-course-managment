@@ -24,6 +24,20 @@ type CourseEntity {
   courseCategories: [CourseCategoryEntity!]!
 }
 
+type PermissionEntity {
+  code: String!
+  name: String!
+  description: String!
+  isActive: Boolean!
+}
+
+type RoleEntity {
+  name: String!
+  permissions: [PermissionEntity!]!
+  isActive: Boolean!
+  isAdmin: Boolean!
+}
+
 type Query {
   courses: [CourseEntity!]!
   course(id: String!): CourseEntity!
@@ -31,13 +45,20 @@ type Query {
   courseCategory(id: String!): LessonEntity!
   categoriesByCourseId(courseId: String!): [CourseCategoryEntity!]!
   lessons: [LessonEntity!]!
+  roles: [RoleEntity!]!
+  permission(id: String!): PermissionEntity!
+  permissions: [PermissionEntity!]!
 }
 
 type Mutation {
   createCourse(createCourseInput: CreateCourseInput!): CourseEntity!
   createCourseCategory(createCourseCategoryInput: CreateCourseCategoryInput!): CourseCategoryEntity!
-  updateOrder(updateCourseCategoryOrder: UpdateCourseCategoryOrder!): [CourseCategoryEntity!]!
+  updateOrder(updateCourseCategoryOrder: UpdateCourseCategoryOrder!): Boolean!
   createLesson(createLessonInput: CreateLessonInput!): LessonEntity!
+  create(createRoleInput: CreateRoleInput!): RoleEntity!
+  update(id: ID!, createRoleInput: UpdateRoleInput!): RoleEntity!
+  inactive(id: String!): PermissionEntity!
+  active(id: String!): PermissionEntity!
 }
 
 input CreateCourseInput {
@@ -60,4 +81,16 @@ input CreateLessonInput {
   videoLink: String!
   description: String!
   courseCategory: String!
+}
+
+input CreateRoleInput {
+  name: String!
+  permissions: String!
+  isAdmin: Boolean!
+}
+
+input UpdateRoleInput {
+  name: String!
+  permissions: String!
+  isAdmin: Boolean!
 }

@@ -19,7 +19,6 @@ export class CourseEntity{
   name: string;
 
   @Prop({
-    required: true,
     index: true,
   })
   @Field()
