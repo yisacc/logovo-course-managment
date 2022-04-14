@@ -2,6 +2,31 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type PermissionEntity {
+  code: String!
+  name: String!
+  description: String!
+  isActive: Boolean!
+}
+
+type RoleEntity {
+  name: String!
+  permissions: [PermissionEntity!]!
+  isActive: Boolean!
+  isAdmin: Boolean!
+}
+
+type UserEntity {
+  firstName: String!
+  lastName: String!
+  mobileNumber: String!
+  email: String!
+  role: RoleEntity!
+  password: String!
+  salt: String!
+  isActive: Boolean!
+}
+
 type LessonEntity {
   _id: String!
   name: String!
@@ -24,20 +49,6 @@ type CourseEntity {
   courseCategories: [CourseCategoryEntity!]!
 }
 
-type PermissionEntity {
-  code: String!
-  name: String!
-  description: String!
-  isActive: Boolean!
-}
-
-type RoleEntity {
-  name: String!
-  permissions: [PermissionEntity!]!
-  isActive: Boolean!
-  isAdmin: Boolean!
-}
-
 type Query {
   courses: [CourseEntity!]!
   course(id: String!): CourseEntity!
@@ -45,6 +56,8 @@ type Query {
   courseCategory(id: String!): LessonEntity!
   categoriesByCourseId(courseId: String!): [CourseCategoryEntity!]!
   lessons: [LessonEntity!]!
+  users: [UserEntity!]!
+  user(id: String!): UserEntity!
   roles: [RoleEntity!]!
   permission(id: String!): PermissionEntity!
   permissions: [PermissionEntity!]!
@@ -56,6 +69,7 @@ type Mutation {
   updateOrder(updateCourseCategoryOrder: UpdateCourseCategoryOrder!): Boolean!
   createLesson(createLessonInput: CreateLessonInput!): LessonEntity!
   create(createRoleInput: CreateRoleInput!): RoleEntity!
+  user(updateUserInput: UpdateUserInput!): UserEntity!
   update(id: ID!, createRoleInput: UpdateRoleInput!): RoleEntity!
   inactive(id: String!): PermissionEntity!
   active(id: String!): PermissionEntity!
@@ -87,6 +101,12 @@ input CreateRoleInput {
   name: String!
   permissions: String!
   isAdmin: Boolean!
+}
+
+input UpdateUserInput {
+  id: String!
+  firstName: String!
+  lastName: String!
 }
 
 input UpdateRoleInput {

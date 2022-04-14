@@ -36,9 +36,6 @@ export class DatabaseService implements MongooseOptionsFactory {
     createMongooseOptions(): MongooseModuleOptions {
         const uri = `mongodb${this.srv ? '+srv' : ''}://${this.user}:${this.password}${this.host}/`;
 
-        if (this.env !== 'production') {
-            mongoose.set('debug', this.debug);
-        }
 
         const mongooseOptions: MongooseModuleOptions = {
             uri,

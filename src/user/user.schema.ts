@@ -48,7 +48,7 @@ export class UserEntity {
     type: Types.ObjectId,
     ref: RoleEntity.name,
   })
-  @Field()
+  @Field(()=>RoleEntity)
   role: Types.ObjectId;
 
   @Prop({

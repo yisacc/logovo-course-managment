@@ -9,6 +9,8 @@ import { LessonsModule } from './lessons/lessons.module';
 import { UserModule } from './user/user.module';
 import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
+import { HelperModule } from './shared/helper/helper.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -24,6 +26,7 @@ import { PermissionModule } from './permission/permission.module';
     UserModule,
     RoleModule,
     PermissionModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],
