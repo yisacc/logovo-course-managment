@@ -10,6 +10,7 @@ import { Debugger } from 'src/shared/debugger/debugger.decorator';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../../auth.service';
 import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../auth.constant';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class BasicGuard implements CanActivate {
@@ -30,7 +31,8 @@ export class BasicGuard implements CanActivate {
     }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const request: Request = context.switchToHttp().getRequest();
+        const ctx = GqlExecutionContext.create(context);
+        const request: Request = ctx.getContext().req;
 
         const authorization: string = request.headers.authorization;
 

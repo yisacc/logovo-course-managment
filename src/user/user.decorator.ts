@@ -10,11 +10,13 @@ import { UserActiveGuard } from './guard/user.active.guard';
 import { UserNotFoundGuard } from './guard/user.not-found.guard';
 import { UserPutToRequestGuard } from './guard/user.put-to-request.guard';
 import { USER_ACTIVE_META_KEY } from './user.constant';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 export const GetUser = createParamDecorator(
     (data: string, ctx: ExecutionContext) => {
-        const { __user } = ctx.switchToHttp().getRequest();
-        return __user;
+        const context = GqlExecutionContext.create(ctx);
+        const { user }= context.getContext().req;
+        return user;
     }
 );
 

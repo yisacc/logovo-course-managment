@@ -11,6 +11,7 @@ import {
     ENUM_USER_STATUS_CODE_ERROR,
     USER_ACTIVE_META_KEY,
 } from '../user.constant';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class UserActiveGuard implements CanActivate {
@@ -28,8 +29,8 @@ export class UserActiveGuard implements CanActivate {
         if (!required) {
             return true;
         }
-
-        const { __user } = context.switchToHttp().getRequest();
+        const ctx = GqlExecutionContext.create(context);
+        const { __user } = ctx.getContext().req;
 
         if (!required.includes(__user.isActive)) {
             this.debuggerService.error('User active error', {

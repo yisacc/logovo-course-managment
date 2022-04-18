@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { JwtRefreshStrategy } from './guard/jwt-refresh/auth.jwt-refresh.strategy';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './guard/jwt/auth.jwt.strategy';
-import { AuthController } from './auth.controller';
+import { AuthController, AuthPublicController } from './auth.controller';
 import { UserService } from '../user/user.service';
 import { RoleService } from '../role/role.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -23,7 +23,7 @@ import { LoggerDatabaseName, LoggerEntity, LoggerSchema } from '../shared/logger
         LoggerService
     ],
     exports: [AuthService],
-    controllers: [AuthController],
+    controllers: [AuthController,AuthPublicController],
     imports: [MongooseModule.forFeature(
       [
           {

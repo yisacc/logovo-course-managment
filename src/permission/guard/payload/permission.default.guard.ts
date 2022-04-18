@@ -9,6 +9,7 @@ import { Debugger } from 'src/shared/debugger/debugger.decorator';
 import { Logger as DebuggerService } from 'winston';
 import { ENUM_PERMISSION_STATUS_CODE_ERROR, ENUM_PERMISSIONS, PERMISSION_META_KEY } from '../../permission.constant';
 import { IPermission } from '../../permission.interface';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class PermissionPayloadDefaultGuard implements CanActivate {
@@ -26,7 +27,7 @@ export class PermissionPayloadDefaultGuard implements CanActivate {
         if (!requiredPermission) {
             return true;
         }
-        const { user } = context.switchToHttp().getRequest();
+        const { user } = GqlExecutionContext.create(context).getContext().req;
         const { role } = user;
         const permissions: string[] = role.permissions
             .filter((val: IPermission) => val.isActive)

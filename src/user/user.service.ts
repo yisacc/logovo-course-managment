@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Schema as MongooseSchema } from 'mongoose';
 import { Types } from 'mongoose';
 import { Helper } from 'src/shared/helper/helper.decorator';
 import { DeleteResult } from 'mongodb';

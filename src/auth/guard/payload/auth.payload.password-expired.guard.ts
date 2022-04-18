@@ -7,6 +7,7 @@ import {
 import { Debugger } from 'src/shared/debugger/debugger.decorator';
 import { Logger as DebuggerService } from 'winston';
 import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../auth.constant';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthPayloadPasswordExpiredGuard implements CanActivate {
@@ -15,7 +16,8 @@ export class AuthPayloadPasswordExpiredGuard implements CanActivate {
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const { user } = context.switchToHttp().getRequest();
+        const ctx = GqlExecutionContext.create(context);
+        const { user } = ctx.getContext().req;
         const { passwordExpiredDate } = user;
         const today: Date = new Date();
         const dPasswordExpiredDate = new Date(passwordExpiredDate);

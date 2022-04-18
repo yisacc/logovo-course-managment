@@ -7,6 +7,7 @@ import {
 import { Debugger } from 'src/shared/debugger/debugger.decorator';
 import { Logger as DebuggerService } from 'winston';
 import { ENUM_PERMISSION_STATUS_CODE_ERROR } from '../permission.constant';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class PermissionNotFoundGuard implements CanActivate {
@@ -15,7 +16,7 @@ export class PermissionNotFoundGuard implements CanActivate {
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const { __permission } = context.switchToHttp().getRequest();
+        const { __permission } = GqlExecutionContext.create(context).getContext().req;
 
         if (!__permission) {
             this.debuggerService.error('Permission not found', {

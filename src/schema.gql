@@ -58,9 +58,12 @@ type Query {
   lessons: [LessonEntity!]!
   users: [UserEntity!]!
   user(id: String!): UserEntity!
+  inactiveuser(id: String!): UserEntity!
+  activateuser(id: String!): UserEntity!
   roles: [RoleEntity!]!
-  permission(id: String!): PermissionEntity!
+  role(id: String!): RoleEntity!
   permissions: [PermissionEntity!]!
+  permission(id: String!): PermissionEntity!
 }
 
 type Mutation {
@@ -69,10 +72,13 @@ type Mutation {
   updateOrder(updateCourseCategoryOrder: UpdateCourseCategoryOrder!): Boolean!
   createLesson(createLessonInput: CreateLessonInput!): LessonEntity!
   create(createRoleInput: CreateRoleInput!): RoleEntity!
-  user(updateUserInput: UpdateUserInput!): UserEntity!
-  update(id: ID!, createRoleInput: UpdateRoleInput!): RoleEntity!
-  inactive(id: String!): PermissionEntity!
-  active(id: String!): PermissionEntity!
+  deleteuser(id: String!): Boolean!
+  updateuser(updateUserInput: UpdateUserInput!): UserEntity!
+  updaterole(id: ID!, createRoleInput: UpdateRoleInput!): RoleEntity!
+  inactivaterole(id: String!): RoleEntity!
+  activaterole(id: String!): RoleEntity!
+  inactivepermission(id: String!): PermissionEntity!
+  activepermission(id: String!): PermissionEntity!
 }
 
 input CreateCourseInput {

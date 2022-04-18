@@ -3,6 +3,7 @@ import { NestApplication, NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
+import { setupSwagger } from './setup-swagger';
 
 async function bootstrap() {
   const app: NestApplication = await NestFactory.create(AppModule);
@@ -14,6 +15,8 @@ async function bootstrap() {
     origin:domain
   });
   app.useGlobalPipes(new ValidationPipe())
+
+  setupSwagger(app);
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}`

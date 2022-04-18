@@ -7,6 +7,7 @@ import {
 import { Debugger } from 'src/shared/debugger/debugger.decorator';
 import { Logger as DebuggerService } from 'winston';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../user.constant';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class UserNotFoundGuard implements CanActivate {
@@ -15,7 +16,8 @@ export class UserNotFoundGuard implements CanActivate {
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const { __user } = context.switchToHttp().getRequest();
+        const ctx = GqlExecutionContext.create(context);
+        const { __user }= ctx.getContext().req;
 
         if (!__user) {
             this.debuggerService.error('User not found', {

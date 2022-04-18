@@ -16,13 +16,13 @@ export class PermissionResolver {
     return await this.permissionService.findOneById(id);
   }
 
-  @Mutation(() => PermissionEntity)
+  @Mutation(() => PermissionEntity, { name:'inactivepermission' })
   async inactive(@Args('id', { type: () => String }) id: string):Promise<PermissionEntity> {
     return await this.permissionService.inactive(id);
 
   }
 
-  @Mutation(() => PermissionEntity)
+  @Mutation(() => PermissionEntity,{name:'activepermission'})
   async active(@Args('id', { type: () => String }) id: string):Promise<PermissionEntity> {
     return await this.permissionService.active(id);
   }

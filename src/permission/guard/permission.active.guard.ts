@@ -11,6 +11,7 @@ import {
     ENUM_PERMISSION_STATUS_CODE_ERROR,
     PERMISSION_ACTIVE_META_KEY,
 } from '../permission.constant';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class PermissionActiveGuard implements CanActivate {
@@ -29,7 +30,7 @@ export class PermissionActiveGuard implements CanActivate {
             return true;
         }
 
-        const { __permission } = context.switchToHttp().getRequest();
+        const { __permission } = GqlExecutionContext.create(context).getContext().req;
 
         if (!required.includes(__permission.isActive)) {
             this.debuggerService.error('Permission active error', {

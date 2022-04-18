@@ -9,12 +9,14 @@ import {
     ValidateIf,
 } from 'class-validator';
 import { IsPasswordStrong, IsStartWith } from 'src/shared/request/request.decorator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class AuthSignUpInput {
     @IsEmail()
     @IsNotEmpty()
     @MaxLength(100)
     @Type(() => String)
+    @ApiProperty()
     readonly email: string;
 
     @IsString()
@@ -22,6 +24,7 @@ export class AuthSignUpInput {
     @MinLength(1)
     @MaxLength(30)
     @Type(() => String)
+    @ApiProperty()
     readonly firstName: string;
 
     @IsString()
@@ -30,6 +33,7 @@ export class AuthSignUpInput {
     @MinLength(1)
     @MaxLength(30)
     @Type(() => String)
+    @ApiProperty()
     readonly lastName?: string;
 
     @IsString()
@@ -37,10 +41,11 @@ export class AuthSignUpInput {
     @MinLength(10)
     @MaxLength(14)
     @Type(() => String)
-    @IsStartWith(['628'])
+    @ApiProperty()
     readonly mobileNumber: string;
 
     @IsNotEmpty()
     @IsPasswordStrong()
+    @ApiProperty()
     readonly password: string;
 }

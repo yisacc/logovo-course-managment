@@ -40,7 +40,9 @@ import { RoleService } from '../role/role.service';
 import { AuthSignUpInput } from './dto/auth.sign-up.input';
 import { RoleDocument } from '../role/role.schema';
 import { RequestValidationPipe } from '../shared/request/pipe/request.validation.pipe';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller({
     version: '1',
 })

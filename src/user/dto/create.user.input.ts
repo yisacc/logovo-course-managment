@@ -43,7 +43,6 @@ export class CreateUserInput {
     @MinLength(10)
     @MaxLength(14)
     @Type(() => String)
-    @IsStartWith(['628'])
     @Field()
     readonly mobileNumber: string;
 

@@ -9,6 +9,7 @@ import { Logger as DebuggerService } from 'winston';
 
 import { Reflector } from '@nestjs/core';
 import { AUTH_ADMIN_META_KEY, ENUM_AUTH_STATUS_CODE_ERROR } from '../../auth.constant';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthPayloadAdminGuard implements CanActivate {
@@ -26,8 +27,8 @@ export class AuthPayloadAdminGuard implements CanActivate {
         if (!required) {
             return true;
         }
-
-        const { user } = context.switchToHttp().getRequest();
+        const ctx = GqlExecutionContext.create(context);
+        const { user } = ctx.getContext().req;
         if (!required.includes(user.role.isAdmin)) {
             this.debuggerService.error('Auth active error', {
                 class: 'AuthActiveGuard',

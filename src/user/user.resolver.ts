@@ -2,7 +2,7 @@ import {
   Body,
   InternalServerErrorException,
   BadRequestException,
-  NotFoundException,
+  NotFoundException, UseGuards,
 } from '@nestjs/common';
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Logger as DebuggerService } from 'winston';
@@ -27,6 +27,7 @@ import { ENUM_ROLE_STATUS_CODE_ERROR } from '../role/role.constant';
 import { UpdateUserInput } from './dto/update.user.input';
 import { ENUM_PERMISSIONS } from '../permission/permission.constant';
 import { ENUM_STATUS_CODE_ERROR } from '../shared/error/error.constant';
+import { GqlAuthGuard } from '../auth/guard/jwt/auth.jwt.guard';
 
 @Resolver(()=>UserEntity)
 export class UserResolver {
@@ -41,13 +42,13 @@ export class UserResolver {
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ)
   async list():Promise<UserEntity[]> {
     return await this.userService.findAll();
-
   }
 
   @Query(()=>UserEntity, { name:'user' })
   @UserGetGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ)
   async get(@Args('id', { type: () => String }) id: string):Promise<UserEntity> {
+    console.log('controller' +id)
     return this.userService.findOneById(id);
   }
   @Mutation(()=>UserEntity)
@@ -135,7 +136,7 @@ export class UserResolver {
       });
     }
   }
-  @Mutation(()=>Boolean, { name:'user' })
+  @Mutation(()=>Boolean, { name:'deleteuser' })
   @UserDeleteGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ, ENUM_PERMISSIONS.USER_DELETE)
   async delete(@Args('id', { type: () => String }) id: string): Promise<boolean> {
@@ -155,7 +156,7 @@ export class UserResolver {
 
     return true;
   }
-@Mutation(()=>UserEntity,{name:'user'})
+@Mutation(()=>UserEntity,{name:'updateuser'})
   @UserUpdateGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ, ENUM_PERMISSIONS.USER_UPDATE)
   async update(
@@ -178,7 +179,7 @@ export class UserResolver {
     }
 
   }
-  @Query(()=>UserEntity,{name:'user'})
+  @Query(()=>UserEntity,{name:'inactiveuser'})
   @UserUpdateInactiveGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ, ENUM_PERMISSIONS.USER_UPDATE)
   async inactive(@Args('id', { type: () => String }) id: string): Promise<UserEntity> {
@@ -198,7 +199,7 @@ export class UserResolver {
     }
 
   }
-  @Query(()=>UserEntity,{name:'user'})
+  @Query(()=>UserEntity,{name:'activateuser'})
   @UserUpdateActiveGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ, ENUM_PERMISSIONS.USER_UPDATE)
   async active(@Args('id', { type: () => String }) id: string): Promise<void> {

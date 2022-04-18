@@ -102,7 +102,6 @@ export class RoleService {
 
   async inactive(_id: string): Promise<RoleDocument> {
     const role: RoleDocument = await this.roleModel.findById(_id);
-
     role.isActive = false;
     return role.save();
   }
