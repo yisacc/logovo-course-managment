@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { RoleService } from './role.service';
+import { RoleBulkService, RoleService } from './role.service';
 import { RoleResolver } from './role.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DATABASE_CONNECTION_NAME } from '../shared/database/database.constant';
 import { RoleDatabaseName, RoleEntity, RoleSchema } from './role.schema';
 
 @Module({
-  providers: [RoleService, RoleResolver],
+  providers: [RoleService,RoleBulkService, RoleResolver],
+  exports: [RoleService, RoleBulkService],
   imports:[MongooseModule.forFeature(
     [
       {

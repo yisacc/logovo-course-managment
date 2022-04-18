@@ -102,7 +102,6 @@ export class UserService {
                  firstName,
                  lastName,
                  password,
-                 passwordExpiredDate,
                  salt,
                  email,
                  mobileNumber,

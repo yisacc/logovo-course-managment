@@ -118,7 +118,6 @@ export class UserResolver {
         mobileNumber: createUserInput.mobileNumber,
         role: createUserInput.role,
         password: password.passwordHash,
-        passwordExpiredDate: password.passwordExpiredDate,
         salt: password.salt,
       });
 
