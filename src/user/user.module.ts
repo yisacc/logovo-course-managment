@@ -8,6 +8,7 @@ import { AuthService } from '../auth/auth.service';
 import { RoleService } from '../role/role.service';
 import { RoleDatabaseName, RoleEntity, RoleSchema } from '../role/role.schema';
 import { PermissionDatabaseName, PermissionEntity, PermissionSchema } from '../permission/permission.schema';
+import { CloudinaryModule } from '../shared/cloudinary/cloudinary.module';
 
 @Module({
   imports:[MongooseModule.forFeature(
@@ -40,6 +41,7 @@ import { PermissionDatabaseName, PermissionEntity, PermissionSchema } from '../p
       ],
       DATABASE_CONNECTION_NAME
     ),
+    CloudinaryModule
   ],
   exports: [UserService, UserBulkService],
   providers: [UserService, UserBulkService,UserResolver,AuthService,RoleService],

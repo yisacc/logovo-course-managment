@@ -8,12 +8,16 @@ export interface IUserDocument extends Omit<UserDocument, 'role'> {
 
 export interface IUserCreate {
     firstName: string;
-    lastName?: string;
+    lastName: string;
     password: string;
     email: string;
     mobileNumber: string;
     role: string;
     salt: string;
+    country:number;
+    city:number;
+    about:string;
+    birthDate:Date;
 }
 
 export type IUserUpdate = Pick<IUserCreate, 'firstName' | 'lastName'>;

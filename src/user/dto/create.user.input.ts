@@ -7,7 +7,7 @@ import {
     MinLength,
     IsMongoId,
     IsOptional,
-    ValidateIf,
+    ValidateIf, IsNumber, IsDate,
 } from 'class-validator';
 import { IsPasswordStrong, IsStartWith } from 'src/shared/request/request.decorator';
 import { Field, InputType } from '@nestjs/graphql';
@@ -30,13 +30,12 @@ export class CreateUserInput {
     readonly firstName: string;
 
     @IsString()
-    @IsOptional()
-    @ValidateIf((e) => e.lastName !== '')
+    @IsNotEmpty()
     @MinLength(1)
     @MaxLength(30)
     @Type(() => String)
     @Field()
-    readonly lastName?: string;
+    readonly lastName: string;
 
     @IsString()
     @IsNotEmpty()
@@ -45,6 +44,31 @@ export class CreateUserInput {
     @Type(() => String)
     @Field()
     readonly mobileNumber: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    @Type(() => Number)
+    @Field()
+    readonly country: number;
+
+    @IsNumber()
+    @IsNotEmpty()
+    @Type(() => Number)
+    @Field()
+    readonly city: number;
+
+    @IsDate()
+    @IsNotEmpty()
+    @Type(() => Date)
+    @Field()
+    readonly birthDate: Date;
+
+
+    @IsString()
+    @IsOptional()
+    @Type(() => String)
+    @Field()
+    readonly about?: string;
 
     @IsNotEmpty()
     @IsMongoId()

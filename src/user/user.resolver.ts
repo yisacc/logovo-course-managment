@@ -119,6 +119,10 @@ export class UserResolver {
         mobileNumber: createUserInput.mobileNumber,
         role: createUserInput.role,
         password: password.passwordHash,
+        city:createUserInput.city,
+        country:createUserInput.country,
+        birthDate:createUserInput.birthDate,
+        about:createUserInput.about,
         salt: password.salt,
       });
 

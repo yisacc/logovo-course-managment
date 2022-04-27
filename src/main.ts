@@ -9,18 +9,16 @@ async function bootstrap() {
   const app: NestApplication = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   const port: number = configService.get<number>('app.http.port');
-  const domain=configService.get<string>('app.domain')
+  const domain = configService.get<string>('app.domain');
   app.enableCors({
-    credentials:true,
-    origin:domain
+    credentials: true,
+    origin: domain,
   });
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe());
 
   setupSwagger(app);
   await app.listen(port);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}`
-  );
+  Logger.log(`🚀 Application is running on: http://localhost:${port}`);
 }
 
 bootstrap();

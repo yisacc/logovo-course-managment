@@ -22,10 +22,20 @@ type UserEntity {
   mobileNumber: String!
   email: String!
   role: RoleEntity!
+  country: Float!
+  city: Float!
+  birthDate: DateTime!
+  image: String!
   password: String!
+  about: String!
   salt: String!
   isActive: Boolean!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type LessonEntity {
   _id: String!
@@ -49,6 +59,30 @@ type CourseEntity {
   courseCategories: [CourseCategoryEntity!]!
 }
 
+type CityEntity {
+  name: String!
+  ascii_name: String!
+  country_code: String!
+  alternate_names: [String!]!
+  city_id: String!
+  country: CountryEntity!
+}
+
+type CountryEntity {
+  iso: String!
+  country: String!
+  capital: String!
+  currency_code: String!
+  currency_name: String!
+  currency_symbol: String!
+  phone: String!
+  postal_code_format: String!
+  postal_code_regex: String!
+  languages: [String!]!
+  country_id: String!
+  cities: [CityEntity!]!
+}
+
 type Query {
   courses: [CourseEntity!]!
   course(id: String!): CourseEntity!
@@ -64,6 +98,9 @@ type Query {
   role(id: String!): RoleEntity!
   permissions: [PermissionEntity!]!
   permission(id: String!): PermissionEntity!
+  countries: [CountryEntity!]!
+  cities: [CityEntity!]!
+  citiesByCountryId(countryId: Float!): [CityEntity!]!
 }
 
 type Mutation {

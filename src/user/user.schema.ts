@@ -55,7 +55,37 @@ export class UserEntity {
     required: true,
   })
   @Field()
+  country: number;
+
+  @Prop({
+    required: true,
+  })
+  @Field()
+  city: number;
+
+  @Prop({
+    required: true,
+  })
+  @Field(()=>Date)
+  birthDate: Date;
+
+  @Prop({
+    required: false,
+  })
+  @Field()
+  image?: string;
+
+  @Prop({
+    required: true,
+  })
+  @Field()
   password: string;
+
+  @Prop({
+    required: false,
+  })
+  @Field()
+  about?: string;
 
   @Prop({
     required: true,

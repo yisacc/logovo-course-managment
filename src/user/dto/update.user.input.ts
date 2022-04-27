@@ -22,10 +22,9 @@ export class UpdateUserInput {
     readonly firstName: string;
 
     @IsString()
-    @IsOptional()
-    @ValidateIf((e) => e.lastName !== '')
+    @IsNotEmpty()
     @MaxLength(30)
     @Type(() => String)
     @Field()
-    readonly lastName?: string;
+    readonly lastName: string;
 }

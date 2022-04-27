@@ -16,6 +16,8 @@ import { UserDocument, UserEntity } from './user.schema';
 import { RoleEntity } from '../role/role.schema';
 import { PermissionEntity } from '../permission/permission.schema';
 import { IAuthPassword } from '../auth/auth.interface';
+import { CloudinaryService } from '../shared/cloudinary/cloudinary.service';
+import { FailedToUploadImage } from '../shared/exceptions/file-not-image.exception';
 
 @Injectable()
 export class UserService {
@@ -25,7 +27,8 @@ export class UserService {
     @InjectModel(UserEntity.name)
     private readonly userModel: Model<UserDocument>,
     @Helper() private readonly helperService: HelperService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private cloudinary: CloudinaryService,
   ) {
     this.uploadPath = this.configService.get<string>('user.uploadPath');
   }
@@ -106,7 +109,11 @@ export class UserService {
                  email,
                  mobileNumber,
                  role,
-               }: IUserCreate): Promise<UserDocument> {
+                 country,
+                 city,
+                 about,
+                  birthDate
+               }: IUserCreate,file?: Express.Multer.File,): Promise<UserDocument> {
     const user: UserEntity = {
       firstName,
       email,
@@ -114,9 +121,22 @@ export class UserService {
       password,
       role: new Types.ObjectId(role),
       isActive: true,
-      lastName: lastName || undefined,
+      lastName: lastName,
       salt,
+      country,
+      city,
+      about:about||undefined,
+      birthDate
     };
+    if(file){
+      await this.cloudinary.uploadImage(file)
+        .then(result=>{
+          user.image=result.url
+        })
+        .catch(error=>{
+          throw new FailedToUploadImage()
+        })
+    }
 
     const create: UserDocument = new this.userModel(user);
     return create.save();

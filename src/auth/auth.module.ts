@@ -12,6 +12,8 @@ import { DATABASE_CONNECTION_NAME } from '../shared/database/database.constant';
 import { RoleDatabaseName, RoleEntity, RoleSchema } from '../role/role.schema';
 import { LoggerService } from '../shared/logger/logger.service';
 import { LoggerDatabaseName, LoggerEntity, LoggerSchema } from '../shared/logger/logger.schema';
+import { ValidatorService } from '../shared/services/validator.service';
+import { CloudinaryService } from '../shared/cloudinary/cloudinary.service';
 
 @Module({
     providers: [
@@ -20,7 +22,9 @@ import { LoggerDatabaseName, LoggerEntity, LoggerSchema } from '../shared/logger
         JwtRefreshStrategy,
         UserService,
         RoleService,
-        LoggerService
+        LoggerService,
+      ValidatorService,
+      CloudinaryService
     ],
     exports: [AuthService],
     controllers: [AuthController,AuthPublicController],

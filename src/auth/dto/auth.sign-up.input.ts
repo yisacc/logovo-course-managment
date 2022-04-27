@@ -6,10 +6,11 @@ import {
     MaxLength,
     MinLength,
     IsOptional,
-    ValidateIf,
+    ValidateIf, IsNumber, IsDate,
 } from 'class-validator';
 import { IsPasswordStrong, IsStartWith } from 'src/shared/request/request.decorator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Field } from '@nestjs/graphql';
 
 export class AuthSignUpInput {
     @IsEmail()
@@ -28,13 +29,12 @@ export class AuthSignUpInput {
     readonly firstName: string;
 
     @IsString()
-    @IsOptional()
-    @ValidateIf((e) => e.lastName !== '')
+    @IsNotEmpty()
     @MinLength(1)
     @MaxLength(30)
     @Type(() => String)
     @ApiProperty()
-    readonly lastName?: string;
+    readonly lastName: string;
 
     @IsString()
     @IsNotEmpty()
@@ -43,6 +43,36 @@ export class AuthSignUpInput {
     @Type(() => String)
     @ApiProperty()
     readonly mobileNumber: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    @Type(() => Number)
+    @Field()
+    @ApiProperty()
+    readonly country: number;
+
+    @IsNumber()
+    @IsNotEmpty()
+    @Type(() => Number)
+    @Field()
+    @ApiProperty()
+    readonly city: number;
+
+    @IsDate()
+    @IsNotEmpty()
+    @Type(() => Date)
+    @Field()
+    @ApiProperty()
+    readonly birthDate: Date;
+
+
+    @IsString()
+    @IsOptional()
+    @ValidateIf((e) => e.about !== '')
+    @Type(() => String)
+    @Field()
+    @ApiProperty({required:false})
+    readonly about?: string;
 
     @IsNotEmpty()
     @IsPasswordStrong()

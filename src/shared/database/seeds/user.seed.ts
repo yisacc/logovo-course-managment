@@ -41,6 +41,10 @@ export class UserSeed {
                 password: password.passwordHash,
                 mobileNumber: '08111111111',
                 role: role._id,
+                about:'test account',
+                birthDate:new Date(),
+                country:337996,
+                city:344979,
                 salt: password.salt,
             });
 
