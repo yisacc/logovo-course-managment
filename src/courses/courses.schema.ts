@@ -3,16 +3,15 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { CourseCategoryEntity } from '../course-categories/course-categories.schema';
 
-
 @Schema({ timestamps: true, versionKey: false })
 @ObjectType()
-export class CourseEntity{
+export class CourseEntity {
   @Field()
   _id: string;
 
   @Prop({
     required: true,
-    unique:true,
+    unique: true,
     index: true,
   })
   @Field()
@@ -34,10 +33,10 @@ export class CourseEntity{
   @Prop({
     required: true,
     type: [MongooseSchema.Types.ObjectId],
-    default:[],
+    default: [],
     ref: CourseCategoryEntity.name,
   })
-  @Field(()=>[CourseCategoryEntity] )
+  @Field(() => [CourseCategoryEntity])
   courseCategories: MongooseSchema.Types.ObjectId[];
 }
 

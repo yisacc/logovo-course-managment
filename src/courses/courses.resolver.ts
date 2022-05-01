@@ -9,19 +9,20 @@ export class CoursesResolver {
 
   @Mutation(() => CourseEntity)
   async createCourse(
-    @Args('createCourseInput') createCourseInput: CreateCourseInput
-  ):Promise<CourseEntity> {
+    @Args('createCourseInput') createCourseInput: CreateCourseInput,
+  ): Promise<CourseEntity> {
     return await this.coursesService.create(createCourseInput);
   }
 
   @Query(() => [CourseEntity], { name: 'courses' })
-  async findAll():Promise<CourseDocument[]> {
+  async findAll(): Promise<CourseDocument[]> {
     return await this.coursesService.findAll();
   }
 
   @Query(() => CourseEntity, { name: 'course' })
-  async findOne(@Args('id', { type: () => String }) id: string):Promise<CourseEntity> {
+  async findOne(
+    @Args('id', { type: () => String }) id: string,
+  ): Promise<CourseEntity> {
     return await this.coursesService.findOne(id);
   }
-
 }

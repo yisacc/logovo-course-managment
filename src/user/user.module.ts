@@ -7,20 +7,25 @@ import { UserResolver } from './user.resolver';
 import { AuthService } from '../auth/auth.service';
 import { RoleService } from '../role/role.service';
 import { RoleDatabaseName, RoleEntity, RoleSchema } from '../role/role.schema';
-import { PermissionDatabaseName, PermissionEntity, PermissionSchema } from '../permission/permission.schema';
+import {
+  PermissionDatabaseName,
+  PermissionEntity,
+  PermissionSchema,
+} from '../permission/permission.schema';
 import { CloudinaryModule } from '../shared/cloudinary/cloudinary.module';
 
 @Module({
-  imports:[MongooseModule.forFeature(
-    [
-      {
-        name: UserEntity.name,
-        schema: UserSchema,
-        collection: UserDatabaseName,
-      },
-    ],
-    DATABASE_CONNECTION_NAME
-  ),
+  imports: [
+    MongooseModule.forFeature(
+      [
+        {
+          name: UserEntity.name,
+          schema: UserSchema,
+          collection: UserDatabaseName,
+        },
+      ],
+      DATABASE_CONNECTION_NAME,
+    ),
     MongooseModule.forFeature(
       [
         {
@@ -29,7 +34,7 @@ import { CloudinaryModule } from '../shared/cloudinary/cloudinary.module';
           collection: RoleDatabaseName,
         },
       ],
-      DATABASE_CONNECTION_NAME
+      DATABASE_CONNECTION_NAME,
     ),
     MongooseModule.forFeature(
       [
@@ -39,11 +44,17 @@ import { CloudinaryModule } from '../shared/cloudinary/cloudinary.module';
           collection: PermissionDatabaseName,
         },
       ],
-      DATABASE_CONNECTION_NAME
+      DATABASE_CONNECTION_NAME,
     ),
-    CloudinaryModule
+    CloudinaryModule,
   ],
   exports: [UserService, UserBulkService],
-  providers: [UserService, UserBulkService,UserResolver,AuthService,RoleService],
+  providers: [
+    UserService,
+    UserBulkService,
+    UserResolver,
+    AuthService,
+    RoleService,
+  ],
 })
 export class UserModule {}

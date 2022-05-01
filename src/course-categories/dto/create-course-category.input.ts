@@ -3,13 +3,13 @@ import { IsMongoId, IsNotEmpty } from 'class-validator';
 import { Schema as MongooseSchema } from 'mongoose';
 
 @InputType()
-export class CreateCourseCategoryInput{
+export class CreateCourseCategoryInput {
   @IsNotEmpty()
   @Field()
-  name:string
+  name: string;
 
   @IsNotEmpty()
   @IsMongoId()
-  @Field(()=>String)
+  @Field(() => String)
   course: MongooseSchema.Types.ObjectId;
 }

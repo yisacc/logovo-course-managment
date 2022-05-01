@@ -10,34 +10,33 @@ import { LessonEntity } from '../lessons/lessons.schema';
 export class CoursesService {
   constructor(
     @InjectModel(CourseEntity.name)
-    private readonly courseModel: Model<CourseDocument>
-  ){}
+    private readonly courseModel: Model<CourseDocument>,
+  ) {}
 
-  async create(createCourseInput: CreateCourseInput):Promise<CourseEntity> {
-    const create:CourseDocument=new this.courseModel({
-      name:createCourseInput.name,
-      videoLink:createCourseInput.videoLink,
-      description:createCourseInput.description
+  async create(createCourseInput: CreateCourseInput): Promise<CourseEntity> {
+    const create: CourseDocument = new this.courseModel({
+      name: createCourseInput.name,
+      videoLink: createCourseInput.videoLink,
+      description: createCourseInput.description,
     });
-    return await create.save()
+    return await create.save();
   }
 
   async findAll() {
     return this.courseModel.find().populate({
-      path:'courseCategories',
+      path: 'courseCategories',
       options: { sort: 'orderKey' },
-      populate:{
-        path:"lessons",
-        model:LessonEntity.name
+      populate: {
+        path: 'lessons',
+        model: LessonEntity.name,
       },
     });
   }
 
-  async findOne(id:String) {
+  async findOne(id: string) {
     return this.courseModel.findById(id).populate({
-      path:'courseCategories',
-      model:CourseCategoryEntity.name
+      path: 'courseCategories',
+      model: CourseCategoryEntity.name,
     });
   }
-
 }

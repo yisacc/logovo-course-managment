@@ -4,18 +4,18 @@ import { Field } from '@nestjs/graphql';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class AuthChangePasswordInput {
-    @IsNotEmpty()
-    @Field(() => String)
-    @ApiProperty()
-    id: string;
+  @IsNotEmpty()
+  @Field(() => String)
+  @ApiProperty()
+  id: string;
 
-    @IsPasswordStrong()
-    @IsNotEmpty()
-    @ApiProperty()
-    readonly newPassword: string;
+  @IsPasswordStrong()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly newPassword: string;
 
-    @IsString()
-    @IsNotEmpty()
-    @ApiProperty()
-    readonly oldPassword: string;
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly oldPassword: string;
 }

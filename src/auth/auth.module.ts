@@ -11,53 +11,58 @@ import { UserDatabaseName, UserEntity, UserSchema } from '../user/user.schema';
 import { DATABASE_CONNECTION_NAME } from '../shared/database/database.constant';
 import { RoleDatabaseName, RoleEntity, RoleSchema } from '../role/role.schema';
 import { LoggerService } from '../shared/logger/logger.service';
-import { LoggerDatabaseName, LoggerEntity, LoggerSchema } from '../shared/logger/logger.schema';
+import {
+  LoggerDatabaseName,
+  LoggerEntity,
+  LoggerSchema,
+} from '../shared/logger/logger.schema';
 import { ValidatorService } from '../shared/services/validator.service';
 import { CloudinaryService } from '../shared/cloudinary/cloudinary.service';
 
 @Module({
-    providers: [
-        AuthService,
-        JwtStrategy,
-        JwtRefreshStrategy,
-        UserService,
-        RoleService,
-        LoggerService,
-      ValidatorService,
-      CloudinaryService
-    ],
-    exports: [AuthService],
-    controllers: [AuthController,AuthPublicController],
-    imports: [MongooseModule.forFeature(
+  providers: [
+    AuthService,
+    JwtStrategy,
+    JwtRefreshStrategy,
+    UserService,
+    RoleService,
+    LoggerService,
+    ValidatorService,
+    CloudinaryService,
+  ],
+  exports: [AuthService],
+  controllers: [AuthController, AuthPublicController],
+  imports: [
+    MongooseModule.forFeature(
       [
-          {
-              name: UserEntity.name,
-              schema: UserSchema,
-              collection: UserDatabaseName,
-          },
+        {
+          name: UserEntity.name,
+          schema: UserSchema,
+          collection: UserDatabaseName,
+        },
       ],
-      DATABASE_CONNECTION_NAME
+      DATABASE_CONNECTION_NAME,
     ),
-        MongooseModule.forFeature(
-          [
-              {
-                  name: RoleEntity.name,
-                  schema: RoleSchema,
-                  collection: RoleDatabaseName,
-              },
-          ],
-          DATABASE_CONNECTION_NAME
-        ),
-        MongooseModule.forFeature(
-          [
-              {
-                  name: LoggerEntity.name,
-                  schema: LoggerSchema,
-                  collection: LoggerDatabaseName,
-              },
-          ],
-          DATABASE_CONNECTION_NAME
-        ),
-    ],
+    MongooseModule.forFeature(
+      [
+        {
+          name: RoleEntity.name,
+          schema: RoleSchema,
+          collection: RoleDatabaseName,
+        },
+      ],
+      DATABASE_CONNECTION_NAME,
+    ),
+    MongooseModule.forFeature(
+      [
+        {
+          name: LoggerEntity.name,
+          schema: LoggerSchema,
+          collection: LoggerDatabaseName,
+        },
+      ],
+      DATABASE_CONNECTION_NAME,
+    ),
+  ],
 })
 export class AuthModule {}

@@ -32,7 +32,7 @@ export class PermissionEntity {
     required: true,
     default: true,
   })
-  @Field(()=>Boolean)
+  @Field(() => Boolean)
   isActive: boolean;
 }
 

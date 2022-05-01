@@ -1,5 +1,5 @@
 export default {
-    enum: {
-        languages: 'message enum languages',
-    },
+  enum: {
+    languages: 'message enum languages',
+  },
 };

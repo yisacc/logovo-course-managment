@@ -10,19 +10,15 @@ import { DeleteResult } from 'mongodb';
 export class PermissionService {
   constructor(
     @InjectModel(PermissionEntity.name)
-    private readonly permissionModel: Model<PermissionDocument>
+    private readonly permissionModel: Model<PermissionDocument>,
   ) {}
 
   async findAll(
     find?: Record<string, any>,
-    options?: Record<string, any>
+    options?: Record<string, any>,
   ): Promise<PermissionDocument[]> {
     const findAll = this.permissionModel.find(find);
-    if (
-      options &&
-      options.limit !== undefined &&
-      options.skip !== undefined
-    ) {
+    if (options && options.limit !== undefined && options.skip !== undefined) {
       findAll.limit(options.limit).skip(options.skip);
     }
 
@@ -37,7 +33,6 @@ export class PermissionService {
     return this.permissionModel.findById(_id).lean();
   }
 
-
   async create(data: IPermission): Promise<PermissionDocument> {
     const create: PermissionDocument = new this.permissionModel({
       name: data.name,
@@ -51,7 +46,7 @@ export class PermissionService {
 
   async update(
     _id: string,
-    { name, description }: UpdatePermissionInput
+    { name, description }: UpdatePermissionInput,
   ): Promise<PermissionDocument> {
     const permission = await this.permissionModel.findById(_id);
 
@@ -60,18 +55,19 @@ export class PermissionService {
     return permission.save();
   }
 
-
   async inactive(_id: string): Promise<PermissionDocument> {
-    const permission: PermissionDocument =
-      await this.permissionModel.findById(_id);
+    const permission: PermissionDocument = await this.permissionModel.findById(
+      _id,
+    );
 
     permission.isActive = false;
     return permission.save();
   }
 
   async active(_id: string): Promise<PermissionDocument> {
-    const permission: PermissionDocument =
-      await this.permissionModel.findById(_id);
+    const permission: PermissionDocument = await this.permissionModel.findById(
+      _id,
+    );
 
     permission.isActive = true;
     return permission.save();
@@ -82,7 +78,7 @@ export class PermissionService {
 export class PermissionBulkService {
   constructor(
     @InjectModel(PermissionEntity.name)
-    private readonly permissionModel: Model<PermissionDocument>
+    private readonly permissionModel: Model<PermissionDocument>,
   ) {}
 
   async createMany(data: IPermission[]): Promise<PermissionDocument[]> {
@@ -92,7 +88,7 @@ export class PermissionBulkService {
         name: name,
         description: description,
         isActive: isActive || true,
-      }))
+      })),
     );
   }
 
@@ -100,4 +96,3 @@ export class PermissionBulkService {
     return this.permissionModel.deleteMany(find);
   }
 }
-

@@ -12,19 +12,15 @@ import { PermissionEntity } from 'src/permission/permission.schema';
 export class RoleService {
   constructor(
     @InjectModel(RoleEntity.name)
-    private readonly roleModel: Model<RoleDocument>
+    private readonly roleModel: Model<RoleDocument>,
   ) {}
 
   async findAll(
     find?: Record<string, any>,
-    options?: Record<string, any>
+    options?: Record<string, any>,
   ): Promise<RoleDocument[]> {
     const roles = this.roleModel.find(find);
-    if (
-      options &&
-      options.limit !== undefined &&
-      options.skip !== undefined
-    ) {
+    if (options && options.limit !== undefined && options.skip !== undefined) {
       roles.limit(options.limit).skip(options.skip);
     }
 
@@ -39,10 +35,7 @@ export class RoleService {
     return this.roleModel.countDocuments(find);
   }
 
-  async findOneById<T>(
-    _id: string,
-    options?: Record<string, any>
-  ): Promise<T> {
+  async findOneById<T>(_id: string, options?: Record<string, any>): Promise<T> {
     const roles = this.roleModel.findById(_id);
 
     if (options && options.populate && options.populate.permission) {
@@ -57,7 +50,7 @@ export class RoleService {
 
   async findOne<T>(
     find?: Record<string, any>,
-    options?: Record<string, any>
+    options?: Record<string, any>,
   ): Promise<T> {
     const role = this.roleModel.findOne(find);
 
@@ -71,13 +64,11 @@ export class RoleService {
     return role.lean();
   }
 
-
-
   async create({
-                 name,
-                 permissions,
-                 isAdmin,
-               }: CreateRoleInput): Promise<RoleDocument> {
+    name,
+    permissions,
+    isAdmin,
+  }: CreateRoleInput): Promise<RoleDocument> {
     const create: RoleDocument = new this.roleModel({
       name: name,
       permissions: permissions.map((val) => new Types.ObjectId(val)),
@@ -90,7 +81,7 @@ export class RoleService {
 
   async update(
     _id: string,
-    { name, permissions, isAdmin }: UpdateRoleInput
+    { name, permissions, isAdmin }: UpdateRoleInput,
   ): Promise<RoleDocument> {
     const update: RoleDocument = await this.roleModel.findById(_id);
     update.name = name;
@@ -116,15 +107,13 @@ export class RoleService {
   async deleteOneById(_id: string): Promise<RoleDocument> {
     return this.roleModel.findByIdAndDelete(_id);
   }
-
-
 }
 
 @Injectable()
 export class RoleBulkService {
   constructor(
     @InjectModel(RoleEntity.name)
-    private readonly roleModel: Model<RoleDocument>
+    private readonly roleModel: Model<RoleDocument>,
   ) {}
 
   async deleteMany(find: Record<string, any>): Promise<DeleteResult> {
@@ -138,7 +127,7 @@ export class RoleBulkService {
         isActive: true,
         isAdmin: isAdmin || false,
         permissions: permissions.map((val) => new Types.ObjectId(val)),
-      }))
+      })),
     );
   }
 }

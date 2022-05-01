@@ -1,5 +1,5 @@
 export interface IHelperJwtOptions {
-    expiredIn?: string;
-    notBefore?: string;
-    secretKey?: string;
+  expiredIn?: string;
+  notBefore?: string;
+  secretKey?: string;
 }

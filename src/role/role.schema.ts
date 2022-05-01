@@ -22,7 +22,7 @@ export class RoleEntity {
     default: [],
     ref: PermissionEntity.name,
   })
-  @Field(()=>[PermissionEntity])
+  @Field(() => [PermissionEntity])
   permissions: Types.ObjectId[];
 
   @Prop({

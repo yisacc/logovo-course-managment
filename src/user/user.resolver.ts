@@ -2,7 +2,8 @@ import {
   Body,
   InternalServerErrorException,
   BadRequestException,
-  NotFoundException, UseGuards,
+  NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Logger as DebuggerService } from 'winston';
@@ -29,36 +30,38 @@ import { ENUM_PERMISSIONS } from '../permission/permission.constant';
 import { ENUM_STATUS_CODE_ERROR } from '../shared/error/error.constant';
 import { GqlAuthGuard } from '../auth/guard/jwt/auth.jwt.guard';
 
-@Resolver(()=>UserEntity)
+@Resolver(() => UserEntity)
 export class UserResolver {
   constructor(
     @Debugger() private readonly debuggerService: DebuggerService,
     private readonly authService: AuthService,
     private readonly userService: UserService,
-    private readonly roleService: RoleService
+    private readonly roleService: RoleService,
   ) {}
 
-  @Query(()=>[UserEntity], { name:'users' })
+  @Query(() => [UserEntity], { name: 'users' })
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ)
-  async list():Promise<UserEntity[]> {
+  async list(): Promise<UserEntity[]> {
     return await this.userService.findAll();
   }
 
-  @Query(()=>UserEntity, { name:'user' })
+  @Query(() => UserEntity, { name: 'user' })
   @UserGetGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ)
-  async get(@Args('id', { type: () => String }) id: string):Promise<UserEntity> {
-    console.log('controller' +id)
+  async get(
+    @Args('id', { type: () => String }) id: string,
+  ): Promise<UserEntity> {
+    console.log('controller' + id);
     return this.userService.findOneById(id);
   }
-  @Mutation(()=>UserEntity)
+  @Mutation(() => UserEntity)
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ, ENUM_PERMISSIONS.USER_CREATE)
   async create(
-    @Args('createUserInput') createUserInput: CreateUserInput
+    @Args('createUserInput') createUserInput: CreateUserInput,
   ): Promise<UserEntity> {
     const checkExist: IUserCheckExist = await this.userService.checkExist(
       createUserInput.email,
-      createUserInput.mobileNumber
+      createUserInput.mobileNumber,
     );
 
     if (checkExist.email && checkExist.mobileNumber) {
@@ -88,8 +91,7 @@ export class UserResolver {
       });
 
       throw new BadRequestException({
-        statusCode:
-        ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
+        statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
         message: 'user.error.mobileNumberExist',
       });
     }
@@ -109,7 +111,7 @@ export class UserResolver {
 
     try {
       const password = await this.authService.createPassword(
-        createUserInput.password
+        createUserInput.password,
       );
 
       return await this.userService.create({
@@ -119,14 +121,12 @@ export class UserResolver {
         mobileNumber: createUserInput.mobileNumber,
         role: createUserInput.role,
         password: password.passwordHash,
-        city:createUserInput.city,
-        country:createUserInput.country,
-        birthDate:createUserInput.birthDate,
-        about:createUserInput.about,
+        city: createUserInput.city,
+        country: createUserInput.country,
+        birthDate: createUserInput.birthDate,
+        about: createUserInput.about,
         salt: password.salt,
       });
-
-
     } catch (err: any) {
       this.debuggerService.error('create try catch', {
         class: 'UserResolver',
@@ -140,10 +140,12 @@ export class UserResolver {
       });
     }
   }
-  @Mutation(()=>Boolean, { name:'deleteuser' })
+  @Mutation(() => Boolean, { name: 'deleteuser' })
   @UserDeleteGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ, ENUM_PERMISSIONS.USER_DELETE)
-  async delete(@Args('id', { type: () => String }) id: string): Promise<boolean> {
+  async delete(
+    @Args('id', { type: () => String }) id: string,
+  ): Promise<boolean> {
     try {
       await this.userService.deleteOneById(id);
     } catch (err) {
@@ -160,13 +162,17 @@ export class UserResolver {
 
     return true;
   }
-@Mutation(()=>UserEntity,{name:'updateuser'})
+  @Mutation(() => UserEntity, { name: 'updateuser' })
   @UserUpdateGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ, ENUM_PERMISSIONS.USER_UPDATE)
   async update(
-  @Args('updateUserInput') updateUserInput: UpdateUserInput): Promise<UserEntity> {
+    @Args('updateUserInput') updateUserInput: UpdateUserInput,
+  ): Promise<UserEntity> {
     try {
-      return await this.userService.updateOneById(updateUserInput.id, updateUserInput);
+      return await this.userService.updateOneById(
+        updateUserInput.id,
+        updateUserInput,
+      );
     } catch (err: any) {
       this.debuggerService.error('update try catch', {
         class: 'UserController',
@@ -181,12 +187,13 @@ export class UserResolver {
         message: 'http.serverError.internalServerError',
       });
     }
-
   }
-  @Query(()=>UserEntity,{name:'inactiveuser'})
+  @Query(() => UserEntity, { name: 'inactiveuser' })
   @UserUpdateInactiveGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ, ENUM_PERMISSIONS.USER_UPDATE)
-  async inactive(@Args('id', { type: () => String }) id: string): Promise<UserEntity> {
+  async inactive(
+    @Args('id', { type: () => String }) id: string,
+  ): Promise<UserEntity> {
     try {
       return await this.userService.inactive(id);
     } catch (e) {
@@ -201,9 +208,8 @@ export class UserResolver {
         message: 'http.serverError.internalServerError',
       });
     }
-
   }
-  @Query(()=>UserEntity,{name:'activateuser'})
+  @Query(() => UserEntity, { name: 'activateuser' })
   @UserUpdateActiveGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ, ENUM_PERMISSIONS.USER_UPDATE)
   async active(@Args('id', { type: () => String }) id: string): Promise<void> {
@@ -225,4 +231,3 @@ export class UserResolver {
     return;
   }
 }
-

@@ -3,9 +3,9 @@ import { MessageService } from 'src/shared/message/message.service';
 
 @Global()
 @Module({
-    providers: [MessageService],
-    exports: [MessageService],
-    imports: [],
-    controllers: [],
+  providers: [MessageService],
+  exports: [MessageService],
+  imports: [],
+  controllers: [],
 })
 export class MessageModule {}

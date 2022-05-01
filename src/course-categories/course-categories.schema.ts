@@ -3,16 +3,15 @@ import { Document, Schema as MongooseSchema, Types } from 'mongoose';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { LessonEntity } from '../lessons/lessons.schema';
 
-
 @Schema({ timestamps: true, versionKey: false })
 @ObjectType()
-export class CourseCategoryEntity{
+export class CourseCategoryEntity {
   @Field()
   _id: string;
 
   @Prop({
     required: true,
-    unique:true,
+    unique: true,
     index: true,
   })
   @Field()
@@ -21,8 +20,7 @@ export class CourseCategoryEntity{
   @Prop({
     required: true,
     index: true,
-    default:65535,
-
+    default: 65535,
   })
   @Field()
   orderKey: number;
@@ -30,14 +28,15 @@ export class CourseCategoryEntity{
   @Prop({
     required: true,
     type: [MongooseSchema.Types.ObjectId],
-    default:[],
+    default: [],
     ref: LessonEntity.name,
   })
-  @Field(()=>[LessonEntity] )
+  @Field(() => [LessonEntity])
   lessons: MongooseSchema.Types.ObjectId[];
 }
 
 export const CourseCategoryDatabaseName = 'courseCategories';
-export const CourseCategorySchema = SchemaFactory.createForClass(CourseCategoryEntity);
+export const CourseCategorySchema =
+  SchemaFactory.createForClass(CourseCategoryEntity);
 
 export type CourseCategoryDocument = CourseCategoryEntity & Document;

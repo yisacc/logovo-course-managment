@@ -48,7 +48,7 @@ export class UserEntity {
     type: Types.ObjectId,
     ref: RoleEntity.name,
   })
-  @Field(()=>RoleEntity)
+  @Field(() => RoleEntity)
   role: Types.ObjectId;
 
   @Prop({
@@ -66,7 +66,7 @@ export class UserEntity {
   @Prop({
     required: true,
   })
-  @Field(()=>Date)
+  @Field(() => Date)
   birthDate: Date;
 
   @Prop({
@@ -99,8 +99,6 @@ export class UserEntity {
   })
   @Field()
   isActive: boolean;
-
-
 }
 
 export const UserDatabaseName = 'users';

@@ -12,6 +12,7 @@ import { PermissionModule } from './permission/permission.module';
 import { AuthModule } from './auth/auth.module';
 import { CountriesModule } from './countries/countries.module';
 import { CitiesModule } from './cities/cities.module';
+import { CloudinaryModule } from './shared/cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { CitiesModule } from './cities/cities.module';
     AuthModule,
     CountriesModule,
     CitiesModule,
+    CloudinaryModule,
   ],
   controllers: [],
   providers: [],

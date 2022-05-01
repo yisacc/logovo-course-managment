@@ -4,16 +4,15 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { CourseEntity } from '../courses/courses.schema';
 import { CourseCategoryEntity } from '../course-categories/course-categories.schema';
 
-
 @Schema({ timestamps: true, versionKey: false })
 @ObjectType()
-export class LessonEntity{
+export class LessonEntity {
   @Field()
   _id: string;
 
   @Prop({
     required: true,
-    unique:true,
+    unique: true,
     index: true,
   })
   @Field()

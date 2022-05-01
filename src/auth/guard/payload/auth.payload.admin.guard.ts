@@ -1,45 +1,48 @@
 import {
-    Injectable,
-    CanActivate,
-    ExecutionContext,
-    ForbiddenException,
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
 } from '@nestjs/common';
 import { Debugger } from 'src/shared/debugger/debugger.decorator';
 import { Logger as DebuggerService } from 'winston';
 
 import { Reflector } from '@nestjs/core';
-import { AUTH_ADMIN_META_KEY, ENUM_AUTH_STATUS_CODE_ERROR } from '../../auth.constant';
+import {
+  AUTH_ADMIN_META_KEY,
+  ENUM_AUTH_STATUS_CODE_ERROR,
+} from '../../auth.constant';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthPayloadAdminGuard implements CanActivate {
-    constructor(
-        @Debugger() private readonly debuggerService: DebuggerService,
-        private reflector: Reflector
-    ) {}
+  constructor(
+    @Debugger() private readonly debuggerService: DebuggerService,
+    private reflector: Reflector,
+  ) {}
 
-    async canActivate(context: ExecutionContext): Promise<boolean> {
-        const required: boolean[] = this.reflector.getAllAndOverride<boolean[]>(
-            AUTH_ADMIN_META_KEY,
-            [context.getHandler(), context.getClass()]
-        );
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const required: boolean[] = this.reflector.getAllAndOverride<boolean[]>(
+      AUTH_ADMIN_META_KEY,
+      [context.getHandler(), context.getClass()],
+    );
 
-        if (!required) {
-            return true;
-        }
-        const ctx = GqlExecutionContext.create(context);
-        const { user } = ctx.getContext().req;
-        if (!required.includes(user.role.isAdmin)) {
-            this.debuggerService.error('Auth active error', {
-                class: 'AuthActiveGuard',
-                function: 'canActivate',
-            });
-
-            throw new ForbiddenException({
-                statusCode: ENUM_AUTH_STATUS_CODE_ERROR.AUTH_GUARD_ADMIN_ERROR,
-                message: 'auth.error.admin',
-            });
-        }
-        return true;
+    if (!required) {
+      return true;
     }
+    const ctx = GqlExecutionContext.create(context);
+    const { user } = ctx.getContext().req;
+    if (!required.includes(user.role.isAdmin)) {
+      this.debuggerService.error('Auth active error', {
+        class: 'AuthActiveGuard',
+        function: 'canActivate',
+      });
+
+      throw new ForbiddenException({
+        statusCode: ENUM_AUTH_STATUS_CODE_ERROR.AUTH_GUARD_ADMIN_ERROR,
+        message: 'auth.error.admin',
+      });
+    }
+    return true;
+  }
 }

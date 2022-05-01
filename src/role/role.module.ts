@@ -6,18 +6,19 @@ import { DATABASE_CONNECTION_NAME } from '../shared/database/database.constant';
 import { RoleDatabaseName, RoleEntity, RoleSchema } from './role.schema';
 
 @Module({
-  providers: [RoleService,RoleBulkService, RoleResolver],
+  providers: [RoleService, RoleBulkService, RoleResolver],
   exports: [RoleService, RoleBulkService],
-  imports:[MongooseModule.forFeature(
-    [
-      {
-        name: RoleEntity.name,
-        schema: RoleSchema,
-        collection: RoleDatabaseName,
-      },
-    ],
-    DATABASE_CONNECTION_NAME
-  ),
-    ]
+  imports: [
+    MongooseModule.forFeature(
+      [
+        {
+          name: RoleEntity.name,
+          schema: RoleSchema,
+          collection: RoleDatabaseName,
+        },
+      ],
+      DATABASE_CONNECTION_NAME,
+    ),
+  ],
 })
 export class RoleModule {}

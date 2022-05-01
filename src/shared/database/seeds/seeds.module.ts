@@ -11,15 +11,15 @@ import { AuthModule } from '../../../auth/auth.module';
 import { CoreModule } from 'src/shared/core/core.module';
 
 @Module({
-    imports: [
-        CoreModule,
-        CommandModule,
-        PermissionModule,
-        UserModule,
-        AuthModule,
-        RoleModule,
-    ],
-    providers: [PermissionSeed, RoleSeed, UserSeed],
-    exports: [],
+  imports: [
+    CoreModule,
+    CommandModule,
+    PermissionModule,
+    UserModule,
+    AuthModule,
+    RoleModule,
+  ],
+  providers: [PermissionSeed, RoleSeed, UserSeed],
+  exports: [],
 })
 export class SeedsModule {}

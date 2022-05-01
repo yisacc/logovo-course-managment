@@ -315,7 +315,7 @@ export class AuthPublicController {
 
   @Response('auth.signUp')
   @Post('/sign-up')
-  @ApiFile({ name: 'image' })
+  @ApiFile({ name: 'file' })
   async signUp(
     @Body(RequestValidationPipe)
     { email, mobileNumber, ...body }: AuthSignUpInput,

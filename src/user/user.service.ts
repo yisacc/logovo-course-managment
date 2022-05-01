@@ -33,8 +33,7 @@ export class UserService {
     this.uploadPath = this.configService.get<string>('user.uploadPath');
   }
 
-  async findAll(
-  ): Promise<UserEntity[]> {
+  async findAll(): Promise<UserEntity[]> {
     const users = this.userModel.find().populate({
       path: 'role',
       model: RoleEntity.name,
@@ -46,11 +45,7 @@ export class UserService {
     return this.userModel.countDocuments(find);
   }
 
-
-  async findOneById<T>(
-    _id: string,
-    options?: Record<string, any>
-  ): Promise<T> {
+  async findOneById<T>(_id: string, options?: Record<string, any>): Promise<T> {
     const user = this.userModel.findById(_id);
 
     if (options && options.populate && options.populate.role) {
@@ -76,7 +71,7 @@ export class UserService {
 
   async findOne<T>(
     find?: Record<string, any>,
-    options?: Record<string, any>
+    options?: Record<string, any>,
   ): Promise<T> {
     const user = this.userModel.findOne(find);
 
@@ -101,19 +96,22 @@ export class UserService {
     return user.lean();
   }
 
-  async create({
-                 firstName,
-                 lastName,
-                 password,
-                 salt,
-                 email,
-                 mobileNumber,
-                 role,
-                 country,
-                 city,
-                 about,
-                  birthDate
-               }: IUserCreate,file?: Express.Multer.File,): Promise<UserDocument> {
+  async create(
+    {
+      firstName,
+      lastName,
+      password,
+      salt,
+      email,
+      mobileNumber,
+      role,
+      country,
+      city,
+      about,
+      birthDate,
+    }: IUserCreate,
+    file?: Express.Multer.File,
+  ): Promise<UserDocument> {
     const user: UserEntity = {
       firstName,
       email,
@@ -125,17 +123,18 @@ export class UserService {
       salt,
       country,
       city,
-      about:about||undefined,
-      birthDate
+      about: about || undefined,
+      birthDate,
     };
-    if(file){
-      await this.cloudinary.uploadImage(file)
-        .then(result=>{
-          user.image=result.url
+    if (file) {
+      await this.cloudinary
+        .uploadImage(file)
+        .then((result) => {
+          user.image = result.url;
         })
-        .catch(error=>{
-          throw new FailedToUploadImage()
-        })
+        .catch((error) => {
+          throw new FailedToUploadImage(error);
+        });
     }
 
     const create: UserDocument = new this.userModel(user);
@@ -152,7 +151,7 @@ export class UserService {
 
   async updateOneById(
     _id: string,
-    { firstName, lastName }: IUserUpdate
+    { firstName, lastName }: IUserUpdate,
   ): Promise<UserDocument> {
     const user: UserDocument = await this.userModel.findById(_id);
 
@@ -165,7 +164,7 @@ export class UserService {
   async checkExist(
     email: string,
     mobileNumber: string,
-    _id?: string
+    _id?: string,
   ): Promise<IUserCheckExist> {
     const existEmail = await this.userModel.exists({
       email: {
@@ -186,7 +185,6 @@ export class UserService {
     };
   }
 
-
   async createRandomFilename(): Promise<Record<string, any>> {
     const filename: string = await this.helperService.stringRandom(20);
 
@@ -198,7 +196,7 @@ export class UserService {
 
   async updatePassword(
     _id: string,
-    { salt, passwordHash, passwordExpiredDate }: IAuthPassword
+    { salt, passwordHash, passwordExpiredDate }: IAuthPassword,
   ): Promise<UserDocument> {
     const auth: UserDocument = await this.userModel.findById(_id);
 
@@ -210,7 +208,7 @@ export class UserService {
 
   async updatePasswordExpired(
     _id: string,
-    passwordExpiredDate: Date
+    passwordExpiredDate: Date,
   ): Promise<UserDocument> {
     const auth: UserDocument = await this.userModel.findById(_id);
     return auth.save();
@@ -235,7 +233,7 @@ export class UserService {
 export class UserBulkService {
   constructor(
     @InjectModel(UserEntity.name)
-    private readonly userModel: Model<UserDocument>
+    private readonly userModel: Model<UserDocument>,
   ) {}
 
   async deleteMany(find: Record<string, any>): Promise<DeleteResult> {

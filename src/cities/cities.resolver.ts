@@ -7,12 +7,14 @@ export class CitiesResolver {
   constructor(private readonly citiesService: CitiesService) {}
 
   @Query(() => [CityEntity], { name: 'cities' })
-  async findAll():Promise<CityEntity[]> {
-    return (await this.citiesService.findAll());
+  async findAll(): Promise<CityEntity[]> {
+    return await this.citiesService.findAll();
   }
 
   @Query(() => [CityEntity], { name: 'citiesByCountryId' })
-  async findByCourseId(@Args('countryId', { type: () => Number }) id: number):Promise<CityEntity[]> {
+  async findByCourseId(
+    @Args('countryId', { type: () => Number }) id: number,
+  ): Promise<CityEntity[]> {
     return await this.citiesService.findByCountryId(id);
   }
 }

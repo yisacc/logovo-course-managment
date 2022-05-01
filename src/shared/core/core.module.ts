@@ -13,33 +13,33 @@ import { DebuggerService } from '../debugger/debugger.service';
 import { MessageModule } from '../message/message.module';
 
 @Module({
-    controllers: [],
-    providers: [],
-    imports: [
-        ConfigModule.forRoot({
-            load: Configs,
-            ignoreEnvFile: false,
-            isGlobal: true,
-            cache: true,
-            envFilePath: ['.env'],
-        }),
-        WinstonModule.forRootAsync({
-            inject: [DebuggerService],
-            imports: [DebuggerModule],
-            useFactory: (loggerService: DebuggerService) =>
-              loggerService.createLogger(),
-        }),
-        MongooseModule.forRootAsync({
-            connectionName: DATABASE_CONNECTION_NAME,
-            inject: [DatabaseService],
-            imports: [DatabaseModule],
-            useFactory: (databaseService: DatabaseService) =>
-                databaseService.createMongooseOptions(),
-        }),
-        MessageModule,
-        DebuggerModule,
-        HelperModule,
-        AuthModule,
-    ],
+  controllers: [],
+  providers: [],
+  imports: [
+    ConfigModule.forRoot({
+      load: Configs,
+      ignoreEnvFile: false,
+      isGlobal: true,
+      cache: true,
+      envFilePath: ['.env'],
+    }),
+    WinstonModule.forRootAsync({
+      inject: [DebuggerService],
+      imports: [DebuggerModule],
+      useFactory: (loggerService: DebuggerService) =>
+        loggerService.createLogger(),
+    }),
+    MongooseModule.forRootAsync({
+      connectionName: DATABASE_CONNECTION_NAME,
+      inject: [DatabaseService],
+      imports: [DatabaseModule],
+      useFactory: (databaseService: DatabaseService) =>
+        databaseService.createMongooseOptions(),
+    }),
+    MessageModule,
+    DebuggerModule,
+    HelperModule,
+    AuthModule,
+  ],
 })
 export class CoreModule {}

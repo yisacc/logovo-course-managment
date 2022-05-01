@@ -7,76 +7,71 @@ import { UserBulkService, UserService } from '../../../user/user.service';
 import { RoleService } from '../../../role/role.service';
 import { RoleDocument } from '../../../role/role.schema';
 
-
 @Injectable()
 export class UserSeed {
-    constructor(
-        @Debugger() private readonly debuggerService: DebuggerService,
-        private readonly authService: AuthService,
-        private readonly userService: UserService,
-        private readonly userBulkService: UserBulkService,
-        private readonly roleService: RoleService
-    ) {}
+  constructor(
+    @Debugger() private readonly debuggerService: DebuggerService,
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+    private readonly userBulkService: UserBulkService,
+    private readonly roleService: RoleService,
+  ) {}
 
-    @Command({
-        command: 'insert:user',
-        describe: 'insert users',
-    })
-    async insert(): Promise<void> {
-        const role: RoleDocument = await this.roleService.findOne<RoleDocument>(
-            {
-                name: 'admin',
-            }
-        );
+  @Command({
+    command: 'insert:user',
+    describe: 'insert users',
+  })
+  async insert(): Promise<void> {
+    const role: RoleDocument = await this.roleService.findOne<RoleDocument>({
+      name: 'admin',
+    });
 
-        try {
-            const password = await this.authService.createPassword(
-                'aaAA@@123444'
-            );
+    try {
+      const password = await this.authService.createPassword('aaAA@@123444');
 
-            await this.userService.create({
-                firstName: 'admin',
-                lastName: 'test',
-                email: 'admin@mail.com',
-                password: password.passwordHash,
-                mobileNumber: '08111111111',
-                role: role._id,
-                about:'test account',
-                birthDate:new Date(),
-                country:337996,
-                city:344979,
-                salt: password.salt,
-            });
+      await this.userService.create({
+        firstName: 'admin',
+        lastName: 'test',
+        email: 'admin@mail.com',
+        password: password.passwordHash,
+        mobileNumber: '08111111111',
+        role: role._id,
+        about: 'test account',
+        birthDate: new Date(),
+        country: 337996,
+        city: 344979,
+        salt: password.salt,
+      });
 
-            this.debuggerService.info('Insert User Succeed', {
-                class: 'UserSeed',
-                function: 'insert',
-            });
-        } catch (e) {
-            this.debuggerService.error(e.message, {
-                class: 'UserSeed',
-                function: 'insert',
-            });
-        }
+      this.debuggerService.info('Insert User Succeed', {
+        class: 'UserSeed',
+        function: 'insert',
+      });
+    } catch (e) {
+      this.debuggerService.error(e.message, {
+        class: 'UserSeed',
+        function: 'insert',
+      });
     }
+  }
 
-    @Command({
-        command: 'remove:user',
-        describe: 'remove users',
-    })
-    async remove(): Promise<void> {
-        try {
-            await this.userBulkService.deleteMany({});
+  @Command({
+    command: 'remove:user',
+    describe: 'remove users',
+  })
+  async remove(): Promise<void> {
+    try {
+      await this.userBulkService.deleteMany({});
 
-            this.debuggerService.info('Remove User Succeed', {
-                class: 'UserSeed',
-                function: 'remove',
-            });
-        } catch (e) {
-            this.debuggerService.error(e.message, {
-                class: 'UserSeed',
-                function: 'remove',
-            });
-        }
+      this.debuggerService.info('Remove User Succeed', {
+        class: 'UserSeed',
+        function: 'remove',
+      });
+    } catch (e) {
+      this.debuggerService.error(e.message, {
+        class: 'UserSeed',
+        function: 'remove',
+      });
     }
+  }
 }

@@ -1,9 +1,9 @@
 import {
-    applyDecorators,
-    createParamDecorator,
-    ExecutionContext,
-    SetMetadata,
-    UseGuards,
+  applyDecorators,
+  createParamDecorator,
+  ExecutionContext,
+  SetMetadata,
+  UseGuards,
 } from '@nestjs/common';
 import { UserPayloadPutToRequestGuard } from './guard/payload/user.payload.put-to-request.guard';
 import { UserActiveGuard } from './guard/user.active.guard';
@@ -13,41 +13,41 @@ import { USER_ACTIVE_META_KEY } from './user.constant';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
 export const GetUser = createParamDecorator(
-    (data: string, ctx: ExecutionContext) => {
-        const context = GqlExecutionContext.create(ctx);
-        const { user }= context.getContext().req;
-        return user;
-    }
+  (data: string, ctx: ExecutionContext) => {
+    const context = GqlExecutionContext.create(ctx);
+    const { user } = context.getContext().req;
+    return user;
+  },
 );
 
 export function UserGetGuard(): any {
-    return applyDecorators(UseGuards(UserPutToRequestGuard, UserNotFoundGuard));
+  return applyDecorators(UseGuards(UserPutToRequestGuard, UserNotFoundGuard));
 }
 
 export function UserDeleteGuard(): any {
-    return applyDecorators(UseGuards(UserPutToRequestGuard, UserNotFoundGuard));
+  return applyDecorators(UseGuards(UserPutToRequestGuard, UserNotFoundGuard));
 }
 
 export function UserUpdateGuard(): any {
-    return applyDecorators(UseGuards(UserPutToRequestGuard, UserNotFoundGuard));
+  return applyDecorators(UseGuards(UserPutToRequestGuard, UserNotFoundGuard));
 }
 
 export function UserProfileGuard(): any {
-    return applyDecorators(
-        UseGuards(UserPayloadPutToRequestGuard, UserNotFoundGuard)
-    );
+  return applyDecorators(
+    UseGuards(UserPayloadPutToRequestGuard, UserNotFoundGuard),
+  );
 }
 
 export function UserUpdateInactiveGuard(): any {
-    return applyDecorators(
-        UseGuards(UserPutToRequestGuard, UserNotFoundGuard, UserActiveGuard),
-        SetMetadata(USER_ACTIVE_META_KEY, [true])
-    );
+  return applyDecorators(
+    UseGuards(UserPutToRequestGuard, UserNotFoundGuard, UserActiveGuard),
+    SetMetadata(USER_ACTIVE_META_KEY, [true]),
+  );
 }
 
 export function UserUpdateActiveGuard(): any {
-    return applyDecorators(
-        UseGuards(UserPutToRequestGuard, UserNotFoundGuard, UserActiveGuard),
-        SetMetadata(USER_ACTIVE_META_KEY, [false])
-    );
+  return applyDecorators(
+    UseGuards(UserPutToRequestGuard, UserNotFoundGuard, UserActiveGuard),
+    SetMetadata(USER_ACTIVE_META_KEY, [false]),
+  );
 }

@@ -4,10 +4,10 @@ import { Schema as MongooseSchema } from 'mongoose';
 import { Prop } from '@nestjs/mongoose';
 
 @InputType()
-export class CreateLessonInput{
+export class CreateLessonInput {
   @IsNotEmpty()
   @Field()
-  name:string
+  name: string;
 
   @IsNotEmpty()
   @Field()
@@ -19,7 +19,6 @@ export class CreateLessonInput{
 
   @IsNotEmpty()
   @IsMongoId()
-  @Field(()=>String)
+  @Field(() => String)
   courseCategory: MongooseSchema.Types.ObjectId;
-
 }

@@ -10,14 +10,14 @@ import permission from './permission.language';
 import file from './file.language';
 
 export default {
-    role,
-    user,
-    http,
-    request,
-    auth,
-    test,
-    response,
-    message,
-    permission,
-    file,
+  role,
+  user,
+  http,
+  request,
+  auth,
+  test,
+  response,
+  message,
+  permission,
+  file,
 };

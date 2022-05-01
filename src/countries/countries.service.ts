@@ -7,12 +7,10 @@ import { CountryDocument, CountryEntity } from './countries.schema';
 export class CountriesService {
   constructor(
     @InjectModel(CountryEntity.name)
-    private readonly countryModel: Model<CountryDocument>
-  ){}
+    private readonly countryModel: Model<CountryDocument>,
+  ) {}
 
-  async findAll(
-  ): Promise<CountryEntity[]> {
+  async findAll(): Promise<CountryEntity[]> {
     return this.countryModel.find();
   }
-
 }

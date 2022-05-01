@@ -3,7 +3,11 @@ import { LessonsService } from './lessons.service';
 import { LessonsResolver } from './lessons.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DATABASE_CONNECTION_NAME } from '../shared/database/database.constant';
-import { LessonDatabaseName, LessonSchema, LessonEntity } from './lessons.schema';
+import {
+  LessonDatabaseName,
+  LessonSchema,
+  LessonEntity,
+} from './lessons.schema';
 import {
   CourseCategoryDatabaseName,
   CourseCategoryEntity,
@@ -12,16 +16,17 @@ import {
 
 @Module({
   providers: [LessonsService, LessonsResolver],
-  imports:[MongooseModule.forFeature(
-    [
-      {
-        name: LessonEntity.name,
-        schema: LessonSchema,
-        collection: LessonDatabaseName,
-      },
-    ],
-    DATABASE_CONNECTION_NAME
-  ),
+  imports: [
+    MongooseModule.forFeature(
+      [
+        {
+          name: LessonEntity.name,
+          schema: LessonSchema,
+          collection: LessonDatabaseName,
+        },
+      ],
+      DATABASE_CONNECTION_NAME,
+    ),
     MongooseModule.forFeature(
       [
         {
@@ -30,8 +35,8 @@ import {
           collection: CourseCategoryDatabaseName,
         },
       ],
-      DATABASE_CONNECTION_NAME
-    )
-  ]
+      DATABASE_CONNECTION_NAME,
+    ),
+  ],
 })
 export class LessonsModule {}

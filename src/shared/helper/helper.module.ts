@@ -5,26 +5,24 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Global()
 @Module({
-    providers: [HelperService],
-    exports: [HelperService],
-    controllers: [],
-    imports: [
-        JwtModule.registerAsync({
-            inject: [ConfigService],
-            imports: [ConfigModule],
-            useFactory: (configService: ConfigService) => {
-                return {
-                    secret: configService.get<string>(
-                        'helper.jwt.defaultSecretKey'
-                    ),
-                    signOptions: {
-                        expiresIn: configService.get<string>(
-                            'helper.jwt.defaultExpirationTime'
-                        ),
-                    },
-                };
-            },
-        }),
-    ],
+  providers: [HelperService],
+  exports: [HelperService],
+  controllers: [],
+  imports: [
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => {
+        return {
+          secret: configService.get<string>('helper.jwt.defaultSecretKey'),
+          signOptions: {
+            expiresIn: configService.get<string>(
+              'helper.jwt.defaultExpirationTime',
+            ),
+          },
+        };
+      },
+    }),
+  ],
 })
 export class HelperModule {}

@@ -7,15 +7,14 @@ import { CityDocument, CityEntity } from './cities.schema';
 export class CitiesService {
   constructor(
     @InjectModel(CityEntity.name)
-    private readonly cityModel: Model<CityDocument>
-  ){}
+    private readonly cityModel: Model<CityDocument>,
+  ) {}
 
-  async findAll(
-  ): Promise<CityEntity[]> {
+  async findAll(): Promise<CityEntity[]> {
     return this.cityModel.find();
   }
 
-  async findByCountryId(id:Number):Promise<CityDocument[]> {
-    return this.cityModel.find({$country:{$country_id:id}})
+  async findByCountryId(id: number): Promise<CityDocument[]> {
+    return this.cityModel.find({ $country: { $country_id: id } });
   }
 }

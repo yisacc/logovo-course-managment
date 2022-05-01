@@ -5,17 +5,18 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class PermissionPutToRequestGuard implements CanActivate {
-    constructor(private readonly permissionService: PermissionService) {}
+  constructor(private readonly permissionService: PermissionService) {}
 
-    async canActivate(context: ExecutionContext): Promise<boolean> {
-        const request = GqlExecutionContext.create(context).getContext().req;
-        const { params } = request;
-        const { permission } = params;
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = GqlExecutionContext.create(context).getContext().req;
+    const { params } = request;
+    const { permission } = params;
 
-        const check: PermissionDocument =
-            await this.permissionService.findOneById(permission);
-        request.__permission = check;
+    const check: PermissionDocument = await this.permissionService.findOneById(
+      permission,
+    );
+    request.__permission = check;
 
-        return true;
-    }
+    return true;
+  }
 }
