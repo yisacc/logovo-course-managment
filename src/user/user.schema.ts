@@ -109,10 +109,8 @@ export type UserDocument = UserEntity & Document;
 // Hooks
 UserSchema.pre<UserDocument>('save', function (next) {
   this.email = this.email.toLowerCase();
-  this.firstName = this.email.toLowerCase();
+  this.firstName = this.firstName.toLowerCase();
 
-  if (this.lastName) {
-    this.lastName = this.lastName.toLowerCase();
-  }
+  this.lastName = this.lastName.toLowerCase();
   next();
 });

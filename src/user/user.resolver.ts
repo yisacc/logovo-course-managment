@@ -51,7 +51,6 @@ export class UserResolver {
   async get(
     @Args('id', { type: () => String }) id: string,
   ): Promise<UserEntity> {
-    console.log('controller' + id);
     return this.userService.findOneById(id);
   }
   @Mutation(() => UserEntity)
