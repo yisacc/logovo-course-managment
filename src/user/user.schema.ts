@@ -78,7 +78,7 @@ export class UserEntity {
   @Prop({
     required: false,
   })
-  @Field()
+  @Field({ nullable: true })
   image?: string;
 
   @Prop({

@@ -51,7 +51,7 @@ type UserEntity {
   country: CountryEntity!
   city: CityEntity!
   birthDate: DateTime!
-  image: String!
+  image: String
   password: String!
   about: String!
   salt: String!
