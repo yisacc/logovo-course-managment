@@ -16,6 +16,7 @@ import {
   IsStartWith,
 } from 'src/shared/request/request.decorator';
 import { Field, InputType } from '@nestjs/graphql';
+import { Types } from 'mongoose';
 
 @InputType()
 export class CreateUserInput {
@@ -52,15 +53,15 @@ export class CreateUserInput {
 
   @IsNumber()
   @IsNotEmpty()
-  @Type(() => Number)
+  @Type()
   @Field()
-  readonly country: number;
+  readonly country: Types.ObjectId;
 
   @IsNumber()
   @IsNotEmpty()
-  @Type(() => Number)
+  @Type()
   @Field()
-  readonly city: number;
+  readonly city: Types.ObjectId;
 
   @IsDate()
   @IsNotEmpty()

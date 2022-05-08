@@ -1,5 +1,6 @@
 import { UserDocument } from './user.schema';
 import { IRoleDocument } from '../role/role.interface';
+import { Types } from 'mongoose';
 
 export interface IUserDocument extends Omit<UserDocument, 'role'> {
   role: IRoleDocument;
@@ -13,8 +14,8 @@ export interface IUserCreate {
   mobileNumber: string;
   role: string;
   salt: string;
-  country: number;
-  city: number;
+  country: Types.ObjectId;
+  city: Types.ObjectId;
   about: string;
   birthDate: Date;
 }

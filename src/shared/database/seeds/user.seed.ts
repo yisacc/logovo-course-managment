@@ -28,7 +28,7 @@ export class UserSeed {
 
     try {
       const password = await this.authService.createPassword('aaAA@@123444');
-
+      const ObjectId = require('mongoose').Types.ObjectId;
       await this.userService.create({
         firstName: 'admin',
         lastName: 'test',
@@ -38,8 +38,8 @@ export class UserSeed {
         role: role._id,
         about: 'test account',
         birthDate: new Date(),
-        country: 337996,
-        city: 344979,
+        country: new ObjectId('62667618e5274832da5fc5f4'),
+        city: new ObjectId('62667607e5274832da5f6a07'),
         salt: password.salt,
       });
 

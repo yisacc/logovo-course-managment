@@ -6,6 +6,8 @@ import { CountryEntity } from '../countries/countries.schema';
 @Schema()
 @ObjectType()
 export class CityEntity {
+  @Field()
+  _id: string;
   @Prop({
     required: true,
     unique: true,

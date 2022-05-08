@@ -18,6 +18,7 @@ import { PermissionEntity } from '../permission/permission.schema';
 import { IAuthPassword } from '../auth/auth.interface';
 import { CloudinaryService } from '../shared/cloudinary/cloudinary.service';
 import { FailedToUploadImage } from '../shared/exceptions/file-not-image.exception';
+import { CountryEntity } from 'src/countries/countries.schema';
 
 @Injectable()
 export class UserService {
@@ -34,10 +35,16 @@ export class UserService {
   }
 
   async findAll(): Promise<UserEntity[]> {
-    const users = this.userModel.find().populate({
-      path: 'role',
-      model: RoleEntity.name,
-    });
+    const users = this.userModel
+      .find()
+      .populate({
+        path: 'role',
+        model: RoleEntity.name,
+      })
+      .populate({
+        path: 'country',
+        model: CountryEntity.name,
+      });
     return users;
   }
 

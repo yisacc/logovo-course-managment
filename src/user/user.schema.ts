@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types, Document } from 'mongoose';
+import { Types, Document, Schema as MongooseSchema } from 'mongoose';
 import { RoleEntity } from 'src/role/role.schema';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { CityEntity } from 'src/cities/cities.schema';
+import { CountryEntity } from 'src/countries/countries.schema';
 
 @Schema({ timestamps: true, versionKey: false })
 @ObjectType()
@@ -53,15 +55,19 @@ export class UserEntity {
 
   @Prop({
     required: true,
+    type: MongooseSchema.Types.ObjectId,
+    ref: CountryEntity.name,
   })
-  @Field()
-  country: number;
+  @Field(() => CountryEntity)
+  country: Types.ObjectId;
 
   @Prop({
     required: true,
+    type: MongooseSchema.Types.ObjectId,
+    ref: CityEntity.name,
   })
-  @Field()
-  city: number;
+  @Field(() => CityEntity)
+  city: Types.ObjectId;
 
   @Prop({
     required: true,

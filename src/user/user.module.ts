@@ -13,6 +13,11 @@ import {
   PermissionSchema,
 } from '../permission/permission.schema';
 import { CloudinaryModule } from '../shared/cloudinary/cloudinary.module';
+import {
+  CountryDatabaseName,
+  CountryEntity,
+  CountrySchema,
+} from 'src/countries/countries.schema';
 
 @Module({
   imports: [
@@ -42,6 +47,16 @@ import { CloudinaryModule } from '../shared/cloudinary/cloudinary.module';
           name: PermissionEntity.name,
           schema: PermissionSchema,
           collection: PermissionDatabaseName,
+        },
+      ],
+      DATABASE_CONNECTION_NAME,
+    ),
+    MongooseModule.forFeature(
+      [
+        {
+          name: CountryEntity.name,
+          schema: CountrySchema,
+          collection: CountryDatabaseName,
         },
       ],
       DATABASE_CONNECTION_NAME,

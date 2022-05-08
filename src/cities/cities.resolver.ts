@@ -13,7 +13,7 @@ export class CitiesResolver {
 
   @Query(() => [CityEntity], { name: 'citiesByCountryId' })
   async findByCourseId(
-    @Args('countryId', { type: () => Number }) id: number,
+    @Args('countryId', { type: () => String }) id: string,
   ): Promise<CityEntity[]> {
     return await this.citiesService.findByCountryId(id);
   }

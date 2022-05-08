@@ -16,14 +16,40 @@ type RoleEntity {
   isAdmin: Boolean!
 }
 
+type CountryEntity {
+  _id: String!
+  iso: String!
+  country: String!
+  capital: String!
+  currency_code: String!
+  currency_name: String!
+  currency_symbol: String!
+  phone: String!
+  postal_code_format: String!
+  postal_code_regex: String!
+  languages: [String!]!
+  country_id: String!
+  cities: [CityEntity!]!
+}
+
+type CityEntity {
+  _id: String!
+  name: String!
+  ascii_name: String!
+  country_code: String!
+  alternate_names: [String!]!
+  city_id: String!
+  country: CountryEntity!
+}
+
 type UserEntity {
   firstName: String!
   lastName: String!
   mobileNumber: String!
   email: String!
   role: RoleEntity!
-  country: Float!
-  city: Float!
+  country: CountryEntity!
+  city: CityEntity!
   birthDate: DateTime!
   image: String!
   password: String!
@@ -59,30 +85,6 @@ type CourseEntity {
   courseCategories: [CourseCategoryEntity!]!
 }
 
-type CityEntity {
-  name: String!
-  ascii_name: String!
-  country_code: String!
-  alternate_names: [String!]!
-  city_id: String!
-  country: CountryEntity!
-}
-
-type CountryEntity {
-  iso: String!
-  country: String!
-  capital: String!
-  currency_code: String!
-  currency_name: String!
-  currency_symbol: String!
-  phone: String!
-  postal_code_format: String!
-  postal_code_regex: String!
-  languages: [String!]!
-  country_id: String!
-  cities: [CityEntity!]!
-}
-
 type Query {
   courses: [CourseEntity!]!
   course(id: String!): CourseEntity!
@@ -100,7 +102,7 @@ type Query {
   permission(id: String!): PermissionEntity!
   countries: [CountryEntity!]!
   cities: [CityEntity!]!
-  citiesByCountryId(countryId: Float!): [CityEntity!]!
+  citiesByCountryId(countryId: String!): [CityEntity!]!
 }
 
 type Mutation {

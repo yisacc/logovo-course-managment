@@ -16,6 +16,7 @@ import {
 } from 'src/shared/request/request.decorator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Field } from '@nestjs/graphql';
+import { Types } from 'mongoose';
 
 export class AuthSignUpInput {
   @IsEmail()
@@ -49,19 +50,19 @@ export class AuthSignUpInput {
   @ApiProperty()
   readonly mobileNumber: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  @Type(() => Number)
+  @Type(() => String)
   @Field()
   @ApiProperty()
-  readonly country: number;
+  readonly country: Types.ObjectId;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  @Type(() => Number)
+  @Type(() => String)
   @Field()
   @ApiProperty()
-  readonly city: number;
+  readonly city: Types.ObjectId;
 
   @IsDate()
   @IsNotEmpty()
