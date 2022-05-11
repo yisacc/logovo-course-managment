@@ -15,9 +15,9 @@ export class UserNotFoundGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
-    const { __user } = ctx.getContext().req;
+    const { user } = ctx.getContext().req;
 
-    if (!__user) {
+    if (!user) {
       this.debuggerService.error('User not found', {
         class: 'UserNotFoundGuard',
         function: 'canActivate',

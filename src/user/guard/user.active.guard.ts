@@ -30,9 +30,9 @@ export class UserActiveGuard implements CanActivate {
       return true;
     }
     const ctx = GqlExecutionContext.create(context);
-    const { __user } = ctx.getContext().req;
+    const { user } = ctx.getContext().req;
 
-    if (!required.includes(__user.isActive)) {
+    if (!required.includes(user.isActive)) {
       this.debuggerService.error('User active error', {
         class: 'UserActiveGuard',
         function: 'canActivate',

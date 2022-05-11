@@ -20,6 +20,7 @@ import { CloudinaryService } from '../shared/cloudinary/cloudinary.service';
 import { FailedToUploadImage } from '../shared/exceptions/file-not-image.exception';
 import { CountryEntity } from 'src/countries/countries.schema';
 import { CityEntity } from 'src/cities/cities.schema';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class UserService {
@@ -124,6 +125,7 @@ export class UserService {
     file?: Express.Multer.File,
   ): Promise<UserDocument> {
     const user: UserEntity = {
+      _id: new mongoose.Types.ObjectId().toString(),
       firstName,
       email,
       mobileNumber,

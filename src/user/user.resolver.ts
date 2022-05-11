@@ -209,9 +209,11 @@ export class UserResolver {
     }
   }
   @Query(() => UserEntity, { name: 'activateuser' })
-  @UserUpdateActiveGuard()
+  @UserUpdateInactiveGuard()
   @AuthAdminJwtGuard(ENUM_PERMISSIONS.USER_READ, ENUM_PERMISSIONS.USER_UPDATE)
-  async active(@Args('id', { type: () => String }) id: string): Promise<void> {
+  async active(
+    @Args('id', { type: () => String }) id: string,
+  ): Promise<UserEntity> {
     try {
       await this.userService.active(id);
     } catch (e) {

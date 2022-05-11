@@ -8,6 +8,9 @@ import { CountryEntity } from 'src/countries/countries.schema';
 @Schema({ timestamps: true, versionKey: false })
 @ObjectType()
 export class UserEntity {
+  @Field()
+  _id: string;
+
   @Prop({
     required: true,
     index: true,

@@ -43,6 +43,7 @@ type CityEntity {
 }
 
 type UserEntity {
+  _id: String!
   firstName: String!
   lastName: String!
   mobileNumber: String!
