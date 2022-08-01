@@ -11,7 +11,7 @@ type PermissionEntity {
 
 type RoleEntity {
   name: String!
-  permissions: [PermissionEntity!]!
+  permissions: [PermissionEntity!]
   isActive: Boolean!
   isAdmin: Boolean!
 }
@@ -54,7 +54,7 @@ type UserEntity {
   birthDate: DateTime!
   image: String
   password: String!
-  about: String!
+  about: String
   salt: String!
   isActive: Boolean!
 }

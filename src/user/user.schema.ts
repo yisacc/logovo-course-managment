@@ -93,7 +93,7 @@ export class UserEntity {
   @Prop({
     required: false,
   })
-  @Field()
+  @Field((type) => String, { nullable: true })
   about?: string;
 
   @Prop({
